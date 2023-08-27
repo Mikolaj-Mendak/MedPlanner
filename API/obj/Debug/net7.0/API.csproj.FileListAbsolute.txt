@@ -41,3 +41,13 @@ C:\Users\User\Documents\GitHub\MedPlanner\api\bin\Debug\net7.0\Microsoft.EntityF
 C:\Users\User\Documents\GitHub\MedPlanner\api\bin\Debug\net7.0\Microsoft.Extensions.DependencyModel.dll
 C:\Users\User\Documents\GitHub\MedPlanner\api\bin\Debug\net7.0\Mono.TextTemplating.dll
 C:\Users\User\Documents\GitHub\MedPlanner\api\bin\Debug\net7.0\System.CodeDom.dll
+C:\Users\User\Documents\GitHub\MedPlanner\API\bin\Debug\net7.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\User\Documents\GitHub\MedPlanner\API\bin\Debug\net7.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\User\Documents\GitHub\MedPlanner\API\bin\Debug\net7.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\User\Documents\GitHub\MedPlanner\API\bin\Debug\net7.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\User\Documents\GitHub\MedPlanner\API\bin\Debug\net7.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\User\Documents\GitHub\MedPlanner\API\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\User\Documents\GitHub\MedPlanner\API\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\User\Documents\GitHub\MedPlanner\API\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\User\Documents\GitHub\MedPlanner\API\bin\Debug\net7.0\AutoMapper.dll
+C:\Users\User\Documents\GitHub\MedPlanner\API\bin\Debug\net7.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

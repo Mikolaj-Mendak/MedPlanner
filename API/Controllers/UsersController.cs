@@ -1,15 +1,12 @@
-﻿using API.Data;
-using API.Entities;
+﻿using API.Entities;
 using API.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class UsersController : ControllerBase
+    [Authorize]
+    public class UsersController : BaseController
     {
         private readonly IUsersService _userService;
 
@@ -40,9 +37,9 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<User>> AddUser(string password, [FromBody] User user)
+        public async Task<ActionResult<User>> AddUser([FromBody] User user)
         {
-            await _userService.AddUserAsync(user, password);
+            await _userService.AddUserAsync(user);
             return NoContent();
         }
 

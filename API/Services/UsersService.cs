@@ -4,7 +4,7 @@ using API.Entities;
 using API.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace API.Services.UsersService
+namespace API.Services
 {
     public class UsersService : IUsersService
     {
@@ -14,14 +14,8 @@ namespace API.Services.UsersService
         {
             _context = context;
         }
-        public async Task AddUserAsync(User user, string password)
+        public async Task AddUserAsync(User user)
         {
-            byte[] passwordHash, passwordSalt;
-            PasswordHelper.CreatePasswordHash(password, out passwordHash, out passwordSalt);
-
-            user.PasswordHash = passwordHash;
-            user.PasswordSalt = passwordSalt;
-
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
         }
@@ -49,9 +43,10 @@ namespace API.Services.UsersService
             var users = await _context.Users.ToListAsync();
             return users;
         }
-        public async Task<bool> VerifyPasswordAsync(User user, string password)
+
+        public async Task<User> GetUserByEmailAsync(string email)
         {
-            return PasswordHelper.VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt);
+            return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
         }
     }
 }
