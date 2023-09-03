@@ -63,10 +63,11 @@ namespace API.Services
                 LastName = registerDto.LastName,
                 Email = registerDto.Email,
                 PasswordHash = passwordHash,
-                PasswordSalt = passwordSalt
+                PasswordSalt = passwordSalt,
+                Pesel = registerDto.Pesel
             };
 
-            _usersService.AddUserAsync(newUser);
+            await _usersService.AddUserAsync(newUser);
 
             var token = GenerateJwtToken(newUser);
 
@@ -81,6 +82,42 @@ namespace API.Services
             return authResult;
         }
 
+        public async Task<DoctorDto> RegisterDoctorAsync(DoctorRegisterDto registerDoctorDto)
+        {
+            if (await _usersService.GetUserByEmailAsync(registerDoctorDto.Email) != null)
+            {
+                return null; 
+            }
+
+            PasswordHelper.CreatePasswordHash(registerDoctorDto.Password, out var passwordHash, out var passwordSalt);
+
+            var newDoctor = new Doctor
+            {
+                FirstName = registerDoctorDto.FirstName,
+                LastName = registerDoctorDto.LastName,
+                Email = registerDoctorDto.Email,
+                PasswordHash = passwordHash,
+                PasswordSalt = passwordSalt,
+                DoctorNumber = registerDoctorDto.DoctorNumber,
+                Pesel = registerDoctorDto.Pesel 
+
+            };
+
+            await _usersService.AddUserAsync(newDoctor);
+
+            var token = GenerateJwtToken(newDoctor);
+
+            var authResult = new DoctorDto
+            {
+                FirstName = newDoctor.FirstName,
+                LastName = newDoctor.LastName,
+                Email = newDoctor.Email,
+                Token = token,
+                DoctorNumber = newDoctor.DoctorNumber
+            };
+
+            return authResult;
+        }
 
     }
 }

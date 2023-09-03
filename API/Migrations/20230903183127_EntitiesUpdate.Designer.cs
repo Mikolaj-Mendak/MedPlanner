@@ -3,6 +3,7 @@ using System;
 using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230903183127_EntitiesUpdate")]
+    partial class EntitiesUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -122,6 +125,30 @@ namespace API.Migrations
                     b.ToTable("DoctorAdmissionConditions");
                 });
 
+            modelBuilder.Entity("API.Entities.Document", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<byte[]>("Data")
+                        .IsRequired()
+                        .HasColumnType("bytea");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid?>("VisitId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("VisitId");
+
+                    b.ToTable("Documents");
+                });
+
             modelBuilder.Entity("API.Entities.Photo", b =>
                 {
                     b.Property<Guid>("Id")
@@ -173,7 +200,7 @@ namespace API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("User");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("User");
 
@@ -214,8 +241,6 @@ namespace API.Migrations
                 {
                     b.HasBaseType("API.Entities.User");
 
-                    b.ToTable("Users");
-
                     b.HasDiscriminator().HasValue("ClinicOwner");
                 });
 
@@ -230,8 +255,6 @@ namespace API.Migrations
                         .HasColumnType("uuid");
 
                     b.HasIndex("PhotoId");
-
-                    b.ToTable("Users");
 
                     b.HasDiscriminator().HasValue("Doctor");
                 });
@@ -277,6 +300,15 @@ namespace API.Migrations
                     b.Navigation("Doctor");
                 });
 
+            modelBuilder.Entity("API.Entities.Document", b =>
+                {
+                    b.HasOne("API.Entities.Visit", "Visit")
+                        .WithMany("Document")
+                        .HasForeignKey("VisitId");
+
+                    b.Navigation("Visit");
+                });
+
             modelBuilder.Entity("API.Entities.Visit", b =>
                 {
                     b.HasOne("API.Entities.Doctor", "Doctor")
@@ -308,6 +340,11 @@ namespace API.Migrations
             modelBuilder.Entity("API.Entities.Clinic", b =>
                 {
                     b.Navigation("ClinicDoctors");
+                });
+
+            modelBuilder.Entity("API.Entities.Visit", b =>
+                {
+                    b.Navigation("Document");
                 });
 
             modelBuilder.Entity("API.Entities.ClinicOwner", b =>

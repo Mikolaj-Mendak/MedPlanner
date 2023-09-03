@@ -21,6 +21,7 @@ builder.Services.AddDbContext<DataContext>(options =>
 builder.Services.AddScoped<IUsersService, UsersService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IAuthorizationService, AuthorizationService>();
+builder.Services.AddScoped<IDoctorService, DoctorService>();
 
 builder.Services.AddSwaggerGen(c =>
 {

@@ -11,6 +11,8 @@ namespace API.Dtos
         [Required]
         public string LastName { get; set; }
         [Required]
+        public string Pesel { get; set; }
+        [Required]
         [EmailAddress(ErrorMessage = "Invalid email address format.")]
         public string Email { get; set; }
         [Required]

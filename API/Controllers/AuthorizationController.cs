@@ -39,5 +39,18 @@ namespace API.Controllers
             return userDto;
         }
 
+        [HttpPost("doctorRegister")]
+        public async Task<ActionResult> DoctorRegister([FromBody] DoctorRegisterDto registerDto)
+        {
+            var authResult = await _authorizationService.RegisterDoctorAsync(registerDto);
+
+            if (authResult == null)
+            {
+                return Conflict("User with this email already exists.");
+            }
+
+            return Ok(authResult);
+        }
+
     }
 }

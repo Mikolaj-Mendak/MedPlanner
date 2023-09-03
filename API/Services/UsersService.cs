@@ -40,7 +40,7 @@ namespace API.Services
 
         public async Task<IEnumerable<User>> GetUsers()
         {
-            var users = await _context.Users.ToListAsync();
+            var users = await _context.Users.Where(u => !(u is Doctor)).ToListAsync();
             return users;
         }
 
