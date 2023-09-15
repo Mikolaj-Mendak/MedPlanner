@@ -35,5 +35,6 @@ namespace API.Data
         public DbSet<Photo> Photos { get; set; }
         public DbSet<Visit> Visits { get; set; }
         public DbSet<DoctorAdmissionConditions> DoctorAdmissionConditions { get; set; }
+        public DbSet<ClinicDoctor> ClinicDoctors { get; set; }
     }
 }

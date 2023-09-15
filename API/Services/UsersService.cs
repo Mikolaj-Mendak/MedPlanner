@@ -31,9 +31,28 @@ namespace API.Services
 
             if (user != null)
             {
-                user.FirstName = updatedUser.FirstName;
-                user.LastName = updatedUser.LastName;
-                user.Email = updatedUser.Email;
+                if(user.FirstName != null)
+                {
+                    user.FirstName = updatedUser.FirstName;
+
+                }
+                if (user.LastName != null)
+                {
+                    user.LastName = updatedUser.LastName;
+                }
+
+                if (user.Email != null)
+                {
+                    user.Email = updatedUser.Email;
+
+                }
+
+                if (user.Pesel != null)
+                {
+                    user.Pesel = updatedUser.Pesel;
+
+                }
+                
                 await _context.SaveChangesAsync();
             }
         }

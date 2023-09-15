@@ -22,6 +22,8 @@ builder.Services.AddScoped<IUsersService, UsersService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IAuthorizationService, AuthorizationService>();
 builder.Services.AddScoped<IDoctorService, DoctorService>();
+builder.Services.AddScoped<IClinicOwnerService, ClinicOwnerService>();
+builder.Services.AddScoped<IVisitService, VisitService>();
 
 builder.Services.AddSwaggerGen(c =>
 {

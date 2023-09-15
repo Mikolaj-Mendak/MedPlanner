@@ -2,6 +2,6 @@
 {
     public class ClinicOwner : User
     {
-        public ICollection<Clinic>? Clinic { get;}
+        public ICollection<Clinic>? Clinic { get; set; }
     }
 }

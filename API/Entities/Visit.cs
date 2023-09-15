@@ -9,7 +9,7 @@
             public Guid DoctorId { get; set; }
             public Doctor Doctor { get; set; }
             public bool IsActive { get; set; }
-            public decimal Fee { get; set; }
+            public decimal? Fee { get; set; }
 
     }
 }

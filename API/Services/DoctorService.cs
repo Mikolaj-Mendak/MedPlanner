@@ -34,11 +34,30 @@ namespace API.Services
                 throw new Exception("Lekarz nie został odnaleziony.");
             }
 
-            existingDoctor.FirstName = updatedDoctorDto.FirstName;
-            existingDoctor.LastName = updatedDoctorDto.LastName;
-            existingDoctor.Email = updatedDoctorDto.Email;
-            existingDoctor.DoctorNumber = updatedDoctorDto.DoctorNumber;
-            existingDoctor.Pesel = updatedDoctorDto.Pesel; 
+            if (updatedDoctorDto.FirstName != null)
+            {
+                existingDoctor.FirstName = updatedDoctorDto.FirstName;
+            }
+
+            if (updatedDoctorDto.LastName != null)
+            {
+                existingDoctor.LastName = updatedDoctorDto.LastName;
+            }
+
+            if (updatedDoctorDto.Email != null)
+            {
+                existingDoctor.Email = updatedDoctorDto.Email;
+            }
+
+            if (updatedDoctorDto.DoctorNumber != null)
+            {
+                existingDoctor.DoctorNumber = updatedDoctorDto.DoctorNumber;
+            }
+
+            if (updatedDoctorDto.Pesel != null)
+            {
+                existingDoctor.Pesel = updatedDoctorDto.Pesel;
+            }
 
             await _context.SaveChangesAsync();
         }

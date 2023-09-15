@@ -52,5 +52,18 @@ namespace API.Controllers
             return Ok(authResult);
         }
 
+        [HttpPost("ownerRegister")]
+        public async Task<ActionResult> OwnerRegister([FromBody] RegisterOwnerDto registerDto)
+        {
+            var authResult = await _authorizationService.RegisterOwnerAsync(registerDto);
+
+            if (authResult == null)
+            {
+                return Conflict("User with this email already exists.");
+            }
+
+            return Ok(authResult);
+        }
+
     }
 }

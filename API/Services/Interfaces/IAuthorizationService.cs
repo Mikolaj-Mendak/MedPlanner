@@ -11,5 +11,6 @@ namespace API.Services.Interfaces
         Task<UserDto> RegisterAsync(RegisterDto registerDto);
         string GenerateJwtToken(User user);
         Task<DoctorDto> RegisterDoctorAsync(DoctorRegisterDto registerDoctorDto);
+        Task<OwnerDto> RegisterOwnerAsync(RegisterOwnerDto registerOwnerDto);
     }
 }

@@ -119,5 +119,42 @@ namespace API.Services
             return authResult;
         }
 
+        public async Task<OwnerDto> RegisterOwnerAsync(RegisterOwnerDto registerOwnerDto)
+        {
+            if (await _usersService.GetUserByEmailAsync(registerOwnerDto.Email) != null)
+            {
+                return null;
+            }
+
+            PasswordHelper.CreatePasswordHash(registerOwnerDto.Password, out var passwordHash, out var passwordSalt);
+
+            var newOwner = new ClinicOwner
+            {
+                FirstName = registerOwnerDto.FirstName,
+                LastName = registerOwnerDto.LastName,
+                Email = registerOwnerDto.Email,
+                PasswordHash = passwordHash,
+                PasswordSalt = passwordSalt,
+                Pesel = registerOwnerDto.Pesel,
+                Clinic = registerOwnerDto.Clinic
+
+            };
+
+            await _usersService.AddUserAsync(newOwner);
+
+            var token = GenerateJwtToken(newOwner);
+
+            var authResult = new OwnerDto
+            {
+                FirstName = newOwner.FirstName,
+                LastName = newOwner.LastName,
+                Email = newOwner.Email,
+                Token = token,
+                Clinic = newOwner.Clinic
+            };
+
+            return authResult;
+        }
+
     }
 }
