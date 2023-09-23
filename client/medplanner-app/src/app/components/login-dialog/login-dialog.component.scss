@@ -1,0 +1,37 @@
+.login-dialog-container{
+    height: 40vh;
+    width: 30vw;
+    background-color: #0ff8d1;
+
+      .mat-input-element {
+        border: 1px solid #00aaa4; /* Kolor obramowania */
+        border-radius: 4px; /* Zaokrąglenie rogów */
+        padding: 10px; /* Wielkość wypełnienia wokół tekstu */
+        font-size: 16px; /* Rozmiar czcionki */
+        background-color: white; /* Kolor tła */
+        margin-top: -10em;
+      }
+      
+      /* Styl dla przycisku */
+      button[type="submit"] {
+        background-color: #00aaa4; /* Kolor tła przycisku */
+        color: white; /* Kolor tekstu przycisku */
+        border: 1px solid #00aaa4; /* Kolor obramowania przycisku */
+        border-radius: 4px; /* Zaokrąglenie rogów */
+        padding: 10px 20px; /* Wielkość wypełnienia wokół tekstu */
+        font-size: 16px; /* Rozmiar czcionki */
+      }
+      
+      /* Styl przycisku po najechaniu myszą */
+      button[type="submit"]:hover {
+        background-color: #007d77; /* Kolor tła przycisku po najechaniu myszą */
+        border: 1px solid #007d77; /* Kolor obramowania przycisku po najechaniu myszą */
+      }
+
+      .login-form{
+        flex-direction: column;
+        align-items: center; 
+        display: flex;
+      }
+}
+

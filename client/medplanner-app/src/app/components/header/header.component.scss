@@ -1,0 +1,89 @@
+.custom-bg-light-green {
+    background-color: #0ff8d1;
+  }
+
+  .navbar-brand {
+    margin-left: 30em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    font-family:Arial, Helvetica, sans-serif
+}
+
+.navbar {
+    height: 20vh;
+    width: 100%; 
+    font-family:Arial, Helvetica, sans-serif
+}
+
+
+.button-logout{
+    font-family:Arial, Helvetica, sans-serif;
+    display: flex;
+    gap: 2px;
+    font-size: large;
+    color: white;
+    margin-right: 5em;
+}
+
+.font-class{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+::ng-deep .nav-link{
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+    font-size: 20px
+}
+
+.custom-logo{
+    margin-left: 10em;
+    margin-right: -5em;
+    height: 500px;
+    width: 700px;
+}
+
+.radio-options {
+    display: flex;
+    gap: 1em;
+}
+
+.inputs{
+    margin-bottom: 0.2em;
+}
+
+
+.form-class{
+    justify-content: center;
+    display: flex;
+
+}
+
+
+.submit-btn {
+    margin-left: 1em;
+    margin-bottom: 1em;
+    align-self: center;
+    height: 40px;
+    background-color: #00aaa4;
+    color: white;
+    border: none; 
+    border-radius: 4px; 
+    cursor: pointer; 
+}
+
+.logout-button{
+    display: flex;
+    align-items: center;
+    margin-left: 1em;
+    margin-bottom: 1em;
+    align-self: center;
+    height: 40px;
+    background-color: #00aaa4;
+    color: white;
+    border: none; 
+    border-radius: 4px; 
+    cursor: pointer; 
+}
+
