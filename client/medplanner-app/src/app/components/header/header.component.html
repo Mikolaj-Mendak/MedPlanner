@@ -9,14 +9,12 @@
                     <option value="Miasto1">Miasto 1</option>
                     <option value="Miasto2">Miasto 2</option>
                     <option value="Miasto3">Miasto 3</option>
-                    <!-- Dodaj więcej opcji miast tutaj -->
                 </select>
                 <select class="form-control inputs" id="miastoSelect">
                     <option value="" disabled selected>Wybierz specjalizacje</option>
                     <option value="Miasto1">Miasto 1</option>
                     <option value="Miasto2">Miasto 2</option>
                     <option value="Miasto3">Miasto 3</option>
-                    <!-- Dodaj więcej opcji miast tutaj -->
                 </select>
             </div>
             <div class="radio-options">
@@ -38,15 +36,26 @@
     </div>
     <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap align-items-center">
-            <div class="button-logout">
-                <button type="submit" class="btn logout-button">
+            <div *ngIf="isLogged" class="login-container">
+                <button type="submit" class="btn custom-button" (click)="logout()">
                     <mat-icon>exit_to_app</mat-icon> Wyloguj
                 </button>
             </div>
-            <div class="button-logout">
-                <button type="submit" class="btn logout-button" (click)="openLoginDialog()">
-                    Zaloguj się
-                </button>
+            <div class="login-container">
+                <div *ngIf="!isLogged">
+                    <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
+                        <input class="form-control inputs" placeholder="Email" id="email" formControlName="email">
+                        <input class="form-control inputs" placeholder="Hasło" id="password" formControlName="password">
+                        <div class="button-container">
+                            <button type="submit" class="btn custom-button">
+                                Zaloguj
+                            </button>
+                            <button type="submit" class="btn custom-button">
+                                Zarejestruj się
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </li>
     </ul>

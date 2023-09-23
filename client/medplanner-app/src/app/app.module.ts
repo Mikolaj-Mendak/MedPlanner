@@ -10,6 +10,7 @@ import { LoginDialogComponent } from './components/login-dialog/login-dialog.com
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { MatDialogModule } from '@angular/material/dialog';
         MatFormFieldModule,
         FormsModule,
         ReactiveFormsModule,
-        MatDialogModule
+        MatDialogModule,
+        HttpClientModule
 
     ],
     providers: [],

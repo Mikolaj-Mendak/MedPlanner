@@ -18,13 +18,19 @@
 }
 
 
-.button-logout{
+.login-container{
     font-family:Arial, Helvetica, sans-serif;
     display: flex;
     gap: 2px;
     font-size: large;
     color: white;
     margin-right: 5em;
+    
+    .button-container{
+        display: flex;
+        justify-content: center;
+        gap: 3px;
+    }
 }
 
 .font-class{
@@ -40,7 +46,7 @@
 .custom-logo{
     margin-left: 10em;
     margin-right: -5em;
-    height: 500px;
+    height: 200px;
     width: 700px;
 }
 
@@ -63,7 +69,7 @@
 
 .submit-btn {
     margin-left: 1em;
-    margin-bottom: 1em;
+    margin-bottom: 0.2em;
     align-self: center;
     height: 40px;
     background-color: #00aaa4;
@@ -73,11 +79,10 @@
     cursor: pointer; 
 }
 
-.logout-button{
+.custom-button{
     display: flex;
     align-items: center;
-    margin-left: 1em;
-    margin-bottom: 1em;
+    margin-bottom: 0.2em;
     align-self: center;
     height: 40px;
     background-color: #00aaa4;
