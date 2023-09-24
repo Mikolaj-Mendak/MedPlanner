@@ -8,6 +8,7 @@ namespace API.Entities
         public ICollection<DoctorAdmissionConditions>? AdmissionConditions { get; set; }
         public Guid? PhotoId { get; set; }
         public Photo Photo { get; set; }
+        public bool IsClinicOwner { get; set; }
         public ICollection<ClinicDoctor>? ClinicDoctors { get; set; }
     }
 }

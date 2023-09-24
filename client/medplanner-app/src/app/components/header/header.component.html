@@ -44,14 +44,13 @@
             <div class="login-container">
                 <div *ngIf="!isLogged">
                     <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
-                        <input class="form-control inputs" placeholder="Email" id="email" formControlName="email">
-                        <input class="form-control inputs" placeholder="Hasło" id="password" formControlName="password">
+                        <input class="form-control inputs" placeholder="Email" id="email" formControlName="email"
+                            [ngClass]="{'has-error': checkLoginValidator('email')}">
+                        <input class="form-control inputs" placeholder="Hasło" id="password" formControlName="password"
+                            type="password" [ngClass]="{'has-error': checkLoginValidator('password')}">
                         <div class="button-container">
                             <button type="submit" class="btn custom-button">
                                 Zaloguj
-                            </button>
-                            <button type="submit" class="btn custom-button">
-                                Zarejestruj się
                             </button>
                         </div>
                     </form>

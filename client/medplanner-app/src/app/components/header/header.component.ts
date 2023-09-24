@@ -47,4 +47,8 @@ export class HeaderComponent {
         this.isLogged = false;
         this.currentUserEmail = null;
     }
+
+    checkLoginValidator(controlName: string): boolean {
+        return this.loginForm.get(controlName).invalid && this.loginForm.get(controlName).touched;
+    }
 }
