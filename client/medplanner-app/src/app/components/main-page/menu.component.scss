@@ -1,13 +1,13 @@
 .custom-bg-light-green {
     background-color: #0ff8d1;
     justify-content: center;
+    padding: 0;
+    margin: 0;
+    height: 900px;
+
+    .nav{
+        align-items: center;
+    }
+    
   }
 
-.sidebar-sticky {
-    width: 10%; 
-    height: 100%;
-}
-
-.nav{
-    align-items: center;
-}

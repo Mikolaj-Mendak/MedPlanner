@@ -1,2 +1,25 @@
 <app-header></app-header>
-<app-menu></app-menu>
+<div class="main-wrapper">
+    <div class="menu-wrapper">
+        <app-menu></app-menu>
+    </div>
+    <div class="main-content">
+        <div class="register-content">
+            <h1>Nie masz konta? Zarejestruj się!</h1>
+            <div class="cards">
+                <div class="register-card" (click)="openPatientRegister()">
+                    <h1>Pacjent</h1>
+                    <p>Kliknij tutaj w celu rejestracji jeżeli jesteś klientem</p>
+                </div>
+                <div class="register-card">
+                    <h1>Lekarz</h1>
+                    <p>Kliknij tutaj w celu rejestracji jeżeli jesteś lekarzem</p>
+                </div>
+                <div class="register-card">
+                    <h1>Właściciel</h1>
+                    <p>Kliknij tutaj w celu rejestracji jeżeli jesteś właścicielem placówki medycznej</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

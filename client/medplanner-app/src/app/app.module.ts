@@ -6,11 +6,11 @@ import { AppComponent } from './app.component';
 import { MenuComponent } from './components/main-page/menu.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './components/header/header.component';
-import { LoginDialogComponent } from './components/login-dialog/login-dialog.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { HttpClientModule } from '@angular/common/http';
+import { PatientRegisterDialogComponent } from './components/patient-register-dialog/patient-register-dialog.component';
 
 
 @NgModule({
@@ -18,7 +18,7 @@ import { HttpClientModule } from '@angular/common/http';
         AppComponent,
         MenuComponent,
         HeaderComponent,
-        LoginDialogComponent
+        PatientRegisterDialogComponent
     ],
     imports: [
         BrowserModule,

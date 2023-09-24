@@ -3,16 +3,16 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
-    selector: 'app-login-dialog',
-    templateUrl: './login-dialog.component.html',
-    styleUrls: ['./login-dialog.component.scss']
+    selector: 'app-patient-register-dialog',
+    templateUrl: './patient-register-dialog.component.html',
+    styleUrls: ['./patient-register-dialog.component.scss']
 })
-export class LoginDialogComponent {
+export class PatientRegisterDialogComponent {
     loginForm: FormGroup;
 
     constructor(
         private formBuilder: FormBuilder,
-        private dialogRef: MatDialogRef<LoginDialogComponent>
+        private dialogRef: MatDialogRef<PatientRegisterDialogComponent>
     ) {
         this.loginForm = this.formBuilder.group({
             username: ['', Validators.required],
