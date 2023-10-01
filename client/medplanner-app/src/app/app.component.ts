@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PatientRegisterDialogComponent } from './components/patient-register-dialog/patient-register-dialog.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'app-root',
@@ -11,7 +12,9 @@ export class AppComponent {
 
     title = 'medplanner-app';
 
-    constructor(private dialog: MatDialog) { }
+    constructor(private dialog: MatDialog, private toastr: ToastrService) {
+
+    }
 
     openPatientRegister(): void {
         const dialogRef = this.dialog.open(PatientRegisterDialogComponent, {

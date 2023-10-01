@@ -4,13 +4,15 @@ import { MatIconModule } from '@angular/material/icon';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MenuComponent } from './components/main-page/menu.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './components/header/header.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { HttpClientModule } from '@angular/common/http';
 import { PatientRegisterDialogComponent } from './components/patient-register-dialog/patient-register-dialog.component';
+import { ToastrModule, provideToastr } from 'ngx-toastr';
+import { ClinicOwnerRegisterDialogComponent } from './components/clinic-owner-register-dialog/clinic-owner-register-dialog.component';
 
 
 @NgModule({
@@ -18,7 +20,8 @@ import { PatientRegisterDialogComponent } from './components/patient-register-di
         AppComponent,
         MenuComponent,
         HeaderComponent,
-        PatientRegisterDialogComponent
+        PatientRegisterDialogComponent,
+        ClinicOwnerRegisterDialogComponent
     ],
     imports: [
         BrowserModule,
@@ -29,10 +32,14 @@ import { PatientRegisterDialogComponent } from './components/patient-register-di
         FormsModule,
         ReactiveFormsModule,
         MatDialogModule,
-        HttpClientModule
-
+        HttpClientModule,
+        ToastrModule.forRoot(),
+        BrowserAnimationsModule
     ],
-    providers: [],
+    providers: [
+        provideAnimations(),
+        provideToastr()
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

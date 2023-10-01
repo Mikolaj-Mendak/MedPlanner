@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
@@ -6,17 +6,18 @@ import { RegisterDto } from 'src/app/DTOs/register-dto';
 import { AuthService } from 'src/app/services/auth-service';
 
 @Component({
-    selector: 'app-patient-register-dialog',
-    templateUrl: './patient-register-dialog.component.html',
-    styleUrls: ['./patient-register-dialog.component.scss']
+    selector: 'app-clinic-owner-register-dialog',
+    templateUrl: './clinic-owner-register-dialog.component.html',
+    styleUrls: ['./clinic-owner-register-dialog.component.scss']
 })
-export class PatientRegisterDialogComponent {
+export class ClinicOwnerRegisterDialogComponent {
+
     registerForm: FormGroup;
 
 
     constructor(
         private formBuilder: FormBuilder,
-        private dialogRef: MatDialogRef<PatientRegisterDialogComponent>,
+        private dialogRef: MatDialogRef<ClinicOwnerRegisterDialogComponent>,
         private authService: AuthService,
         private toastr: ToastrService
     ) {
@@ -59,6 +60,10 @@ export class PatientRegisterDialogComponent {
         });
     }
 
+    setClinicRegisterForm(): void {
+
+    }
+
     passwordsMatch(formGroup: FormGroup): { [key: string]: boolean } | null {
         const password = formGroup.get('password');
         const passwordVerify = formGroup.get('passwordVerify');
@@ -68,6 +73,5 @@ export class PatientRegisterDialogComponent {
         }
         return null;
     }
-
 
 }

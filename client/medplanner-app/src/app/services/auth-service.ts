@@ -5,6 +5,7 @@ import { environment } from '../../environment';
 import { LoginDto } from '../DTOs/login-dto';
 import { UserDto } from '../DTOs/user-dto';
 import { User } from '../models/user';
+import { RegisterDto } from '../DTOs/register-dto';
 
 @Injectable({
     providedIn: 'root'
@@ -38,6 +39,16 @@ export class AuthService {
     logout() {
         localStorage.removeItem('currentUser');
         this.currentUserSubject.next(null);
+    }
+
+    register(registerData: RegisterDto): Observable<User> {
+        console.log(registerData)
+        return this.http.post<any>(`${this.apiUrl}/authorization/register`, registerData)
+            .pipe(map(user => {
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                this.currentUserSubject.next(user);
+                return user;
+            }));
     }
 
     isLoggedIn(): boolean {
