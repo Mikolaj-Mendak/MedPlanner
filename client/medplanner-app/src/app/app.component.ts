@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { PatientRegisterDialogComponent } from './components/patient-register-dialog/patient-register-dialog.component';
 import { ToastrService } from 'ngx-toastr';
 import { OwnerRegisterDialogComponent } from './components/owner-register-dialog/owner-register-dialog.component';
+import { DoctorRegisterDialogComponent } from './components/doctor-register-dialog/doctor-register-dialog.component';
 
 @Component({
     selector: 'app-root',
@@ -19,8 +20,8 @@ export class AppComponent {
 
     openPatientRegister(): void {
         const dialogRef = this.dialog.open(PatientRegisterDialogComponent, {
-            width: '800px',
-            height: '500px'
+            width: '400px',
+            height: '600px'
         });
 
         dialogRef.afterClosed().subscribe(result => {
@@ -30,8 +31,18 @@ export class AppComponent {
 
     openOwnerRegister(): void {
         const dialogRef = this.dialog.open(OwnerRegisterDialogComponent, {
-            width: '800px',
-            height: '500px'
+            width: '400px',
+            height: '600px'
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+        });
+    }
+
+    openDoctorRegister(): void {
+        const dialogRef = this.dialog.open(DoctorRegisterDialogComponent, {
+            width: '400px',
+            height: '600px'
         });
 
         dialogRef.afterClosed().subscribe(result => {

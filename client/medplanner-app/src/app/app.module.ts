@@ -12,8 +12,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { HttpClientModule } from '@angular/common/http';
 import { PatientRegisterDialogComponent } from './components/patient-register-dialog/patient-register-dialog.component';
 import { ToastrModule, provideToastr } from 'ngx-toastr';
-import { ClinicOwnerRegisterDialogComponent } from './components/clinic-owner-register-dialog/clinic-owner-register-dialog.component';
 import { OwnerRegisterDialogComponent } from './components/owner-register-dialog/owner-register-dialog.component';
+import { DoctorRegisterDialogComponent } from './components/doctor-register-dialog/doctor-register-dialog.component';
 
 
 @NgModule({
@@ -22,8 +22,8 @@ import { OwnerRegisterDialogComponent } from './components/owner-register-dialog
         MenuComponent,
         HeaderComponent,
         PatientRegisterDialogComponent,
-        ClinicOwnerRegisterDialogComponent,
-        OwnerRegisterDialogComponent
+        OwnerRegisterDialogComponent,
+        DoctorRegisterDialogComponent
     ],
     imports: [
         BrowserModule,

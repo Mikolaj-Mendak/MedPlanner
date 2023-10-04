@@ -1,23 +1,24 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { RegisterDto } from 'src/app/DTOs/register-dto';
 import { AuthService } from 'src/app/services/auth-service';
+import { PatientRegisterDialogComponent } from '../patient-register-dialog/patient-register-dialog.component';
+import { DoctorRegisterDto } from 'src/app/DTOs/doctor-register-dto';
 
 @Component({
-    selector: 'app-clinic-owner-register-dialog',
-    templateUrl: './clinic-owner-register-dialog.component.html',
-    styleUrls: ['./clinic-owner-register-dialog.component.scss']
+    selector: 'app-doctor-register-dialog',
+    templateUrl: './doctor-register-dialog.component.html',
+    styleUrls: ['./doctor-register-dialog.component.scss']
 })
-export class ClinicOwnerRegisterDialogComponent {
+export class DoctorRegisterDialogComponent {
 
     registerForm: FormGroup;
 
-
     constructor(
         private formBuilder: FormBuilder,
-        private dialogRef: MatDialogRef<ClinicOwnerRegisterDialogComponent>,
+        private dialogRef: MatDialogRef<PatientRegisterDialogComponent>,
         private authService: AuthService,
         private toastr: ToastrService
     ) {
@@ -26,15 +27,16 @@ export class ClinicOwnerRegisterDialogComponent {
 
     onSubmit() {
         if (this.registerForm.valid) {
-            const registerData: RegisterDto = {
+            const registerData: DoctorRegisterDto = {
                 firstName: this.registerForm.get('firstName').value,
                 lastName: this.registerForm.get('lastName').value,
                 email: this.registerForm.get('email').value,
                 password: this.registerForm.get('password').value,
                 pesel: this.registerForm.get('pesel').value,
+                doctorNumber: this.registerForm.get('doctorNumber').value
             };
 
-            this.authService.register(registerData).subscribe(
+            this.authService.doctorRegister(registerData).subscribe(
                 (user) => {
                     this.toastr.success('Założono konto. Teraz się zaloguj.', 'Sukces');
                     this.dialogRef.close();
@@ -54,14 +56,11 @@ export class ClinicOwnerRegisterDialogComponent {
             email: ['', [Validators.required, Validators.email]],
             password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(20), Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,20}$/)]],
             passwordVerify: ['', Validators.required],
-            pesel: ['', [Validators.required, Validators.minLength(11), Validators.maxLength(11)]]
+            pesel: ['', [Validators.required, Validators.minLength(11), Validators.maxLength(11)]],
+            doctorNumber: ['', Validators.required]
         }, {
             validators: [this.passwordsMatch]
         });
-    }
-
-    setClinicRegisterForm(): void {
-
     }
 
     passwordsMatch(formGroup: FormGroup): { [key: string]: boolean } | null {
@@ -73,5 +72,4 @@ export class ClinicOwnerRegisterDialogComponent {
         }
         return null;
     }
-
 }
