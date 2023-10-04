@@ -51,6 +51,25 @@ export class AuthService {
             }));
     }
 
+    ownerRegister(registerData: RegisterDto): Observable<any> {
+        return this.http.post<any>(`${this.apiUrl}/authorization/ownerRegister`, registerData)
+            .pipe(map(response => {
+                localStorage.setItem('currentUser', JSON.stringify(response));
+                this.currentUserSubject.next(response);
+                return response;
+            }));
+    }
+
+    doctorRegister(registerData: RegisterDto): Observable<any> {
+        return this.http.post<any>(`${this.apiUrl}/authorization/doctorRegister`, registerData)
+            .pipe(map(response => {
+                localStorage.setItem('currentUser', JSON.stringify(response));
+                this.currentUserSubject.next(response);
+                return response;
+            }));
+    }
+
+
     isLoggedIn(): boolean {
         const userToken = localStorage.getItem('token');
         return !!userToken;

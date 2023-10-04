@@ -136,7 +136,7 @@ namespace API.Services
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
                 Pesel = registerOwnerDto.Pesel,
-                Clinic = registerOwnerDto.Clinic
+                Clinic = registerOwnerDto?.Clinic
 
             };
 

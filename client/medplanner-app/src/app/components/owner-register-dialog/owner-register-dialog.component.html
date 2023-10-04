@@ -1,0 +1,36 @@
+<div class="login-dialog-container">
+    <h2 style="padding-top: 2em;">Zarejestruj się</h2>
+    <div class="inputs-container">
+        <form [formGroup]="registerForm">
+            <input class="form-control inputs" placeholder="Imię" id="firstName" formControlName="firstName"
+                [ngClass]="{ 'invalid-field': registerForm.get('firstName').invalid && (registerForm.get('firstName').dirty || registerForm.get('firstName').touched) }">
+
+            <input class="form-control inputs" placeholder="Nazwisko" id="lastName" formControlName="lastName"
+                [ngClass]="{ 'invalid-field': registerForm.get('lastName').invalid && (registerForm.get('lastName').dirty || registerForm.get('lastName').touched) }">
+
+            <input class="form-control inputs" placeholder="Email" id="email" formControlName="email"
+                [ngClass]="{ 'invalid-field': registerForm.get('email').invalid && (registerForm.get('email').dirty || registerForm.get('email').touched) }">
+
+            <input class="form-control inputs" placeholder="Hasło" id="password" formControlName="password"
+                type="password"
+                [ngClass]="{ 'invalid-field': registerForm.get('password').invalid && (registerForm.get('password').dirty || registerForm.get('password').touched) }">
+
+            <div
+                *ngIf="registerForm.get('password').dirty && registerForm.get('passwordVerify').dirty && registerForm.hasError('passwordsNotMatch')">
+                Hasła nie są zgodne!
+            </div>
+            <input class="form-control inputs" placeholder="Potwierdź hasło" id="passwordVerify"
+                formControlName="passwordVerify" type="password"
+                [ngClass]="{ 'invalid-field': registerForm.get('passwordVerify').invalid && (registerForm.get('passwordVerify').dirty || registerForm.get('passwordVerify').touched) }">
+            <input class="form-control inputs" placeholder="Pesel" id="pesel" formControlName="pesel" type="text"
+                [ngClass]="{ 'invalid-field': registerForm.get('pesel').invalid && (registerForm.get('pesel').dirty || registerForm.get('pesel').touched) }">
+
+            <div class="button-container">
+                <button type="submit" class="btn custom-button" (click)="onSubmit()"
+                    [disabled]="!registerForm.valid || registerForm.hasError('passwordsNotMatch')">
+                    Zarejestruj
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -13,6 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { PatientRegisterDialogComponent } from './components/patient-register-dialog/patient-register-dialog.component';
 import { ToastrModule, provideToastr } from 'ngx-toastr';
 import { ClinicOwnerRegisterDialogComponent } from './components/clinic-owner-register-dialog/clinic-owner-register-dialog.component';
+import { OwnerRegisterDialogComponent } from './components/owner-register-dialog/owner-register-dialog.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { ClinicOwnerRegisterDialogComponent } from './components/clinic-owner-re
         MenuComponent,
         HeaderComponent,
         PatientRegisterDialogComponent,
-        ClinicOwnerRegisterDialogComponent
+        ClinicOwnerRegisterDialogComponent,
+        OwnerRegisterDialogComponent
     ],
     imports: [
         BrowserModule,
