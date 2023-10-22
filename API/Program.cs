@@ -4,6 +4,7 @@ using API.Services;
 using API.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -24,6 +25,8 @@ builder.Services.AddScoped<IAuthorizationService, AuthorizationService>();
 builder.Services.AddScoped<IDoctorService, DoctorService>();
 builder.Services.AddScoped<IClinicOwnerService, ClinicOwnerService>();
 builder.Services.AddScoped<IVisitService, VisitService>();
+builder.Services.AddScoped<IUserProviderService, UserProviderService>();
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 builder.Services.AddSwaggerGen(c =>
 {
@@ -103,5 +106,5 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
+ 
 app.Run();

@@ -1,0 +1,89 @@
+<div class="details-container" *ngIf="clinic$ | async as clinic">
+    <div class="details-column">
+        <h1 style="margin-top: 2em; border-bottom: 1px solid white;">Kontakt <mat-icon>edit</mat-icon></h1>
+        <div class="column-content">
+            <ng-container *ngIf="!editModeContact">
+                <p><strong>Nazwa kliniki:</strong> {{ clinic.name }}</p>
+                <p><strong>Adres:</strong> {{ clinic.address }}</p>
+                <p><strong>NIP:</strong> {{ clinic.nip }}</p>
+                <p><strong>Typ:</strong> {{ clinic.isNfz ? 'Przychodnia publiczna NFZ' : 'Przychodnia prywatna' }}</p>
+                <p><strong>Numer telefonu:</strong> {{ clinic.phoneNumber }}</p>
+
+            </ng-container>
+            <ng-container *ngIf="editModeContact">
+                <input [(ngModel)]="clinic.name" placeholder="Nazwa kliniki">
+                <input [(ngModel)]="clinic.address" placeholder="Adres">
+                <input [(ngModel)]="clinic.nip" placeholder="NIP">
+                <label>
+                    <input type="checkbox" [(ngModel)]="clinic.isNfz"> Przychodnia publiczna NFZ
+                </label>
+                <label>
+                    <input type="checkbox" [(ngModel)]="clinic.isNfz"> Przychodnia prywatna
+                </label>
+            </ng-container>
+            <div class="buttons-container">
+                <button type="submit" class="btn custom-button">
+                    Zapisz
+                </button>
+                <button type="submit" class="btn custom-button">
+                    Powrót
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="details-column">
+        <h1 style="margin-top: 2em; border-bottom: 1px solid white;">Godziny pracy <mat-icon>edit</mat-icon></h1>
+        <div class="column-content">
+            <ul style="list-style: none;">
+                <li *ngIf="clinic.workingDays.includes(0)"><strong>Niedziela</strong></li>
+                <li *ngIf="clinic.workingDays.includes(1)"><strong>Poniedziałek</strong></li>
+                <li *ngIf="clinic.workingDays.includes(2)"><strong>Wtorek</strong></li>
+                <li *ngIf="clinic.workingDays.includes(3)"><strong>Środa</strong></li>
+                <li *ngIf="clinic.workingDays.includes(4)"><strong>Czwartek</strong></li>
+                <li *ngIf="clinic.workingDays.includes(5)"><strong>Piątek</strong></li>
+                <li *ngIf="clinic.workingDays.includes(6)"><strong>Sobota</strong></li>
+            </ul>
+            <p *ngIf="!editModeTime"><strong>Otwarcie:</strong> {{ formatTime(clinic.officeHoursStartDate) }}</p>
+            <p *ngIf="!editModeTime"><strong>Zamknięcie:</strong> {{ formatTime(clinic.officeHoursEndDate) }}</p>
+            <ng-container *ngIf="editModeTime">
+                <input [(ngModel)]="clinic.officeHoursStartDate" type="time">
+                <input [(ngModel)]="clinic.officeHoursEndDate" type="time">
+            </ng-container>
+        </div>
+    </div>
+</div>
+
+<div class="table-wrapper">
+    <h1 class="page-header">Przychodnie</h1>
+    <hr />
+    <div class="button-container">
+        <button type="submit" class="btn custom-button">
+            Dodaj klinikę
+        </button>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Nazwa</th>
+                <th>Adres</th>
+                <th style="width: 100px;"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- <tr *ngFor="let clinic of clinics$ | async">
+                <td>{{ clinic.name }}</td>
+                <td>{{ clinic.address }}</td>
+                <td>
+                    <button style="background-color: transparent; border: none; color: red;" mat-icon-button
+                        (click)="deleteClinic(clinic)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                    <button style="background-color: transparent; border: none; color: blue;" mat-icon-button
+                        (click)="showDetails(clinic)">
+                        <mat-icon>info</mat-icon>
+                    </button>
+                </td>
+            </tr> -->
+        </tbody>
+    </table>
+</div>

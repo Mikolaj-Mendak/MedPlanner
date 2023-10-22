@@ -1,7 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { OwnerClinicsComponent } from './components/owner-clinics/owner-clinics.component';
+import { RegisterPageComponent } from './components/register-page/register-page.component';
+import { ClinicDetailsComponent } from './components/clinic-details/clinic-details.component';
 
 const routes: Routes = [
+    { path: 'ownerClinics', component: OwnerClinicsComponent },
+    { path: '', component: RegisterPageComponent },
+    { path: 'ownerClinics/:id', component: ClinicDetailsComponent },
 ];
 
 @NgModule({

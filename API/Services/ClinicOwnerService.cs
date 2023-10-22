@@ -10,10 +10,12 @@ namespace API.Services
     public class ClinicOwnerService : IClinicOwnerService
     {
         private readonly DataContext _context;
+        private readonly IUserProviderService _currentUserService;
 
-        public ClinicOwnerService(DataContext context)
+        public ClinicOwnerService(DataContext context, IUserProviderService currentUserService)
         {
             _context = context;
+            _currentUserService = currentUserService;
         }
 
         public async Task<ClinicOwner> GetClinicOwner(Guid onwerId)
@@ -67,9 +69,9 @@ namespace API.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<Clinic> AddClinic(Guid ownerId, AddClinicDto addClinicDto)
+        public async Task<Clinic> AddClinic(AddClinicDto addClinicDto)
         {
-            var clinicOwner = await _context.ClinicOwners.FindAsync(ownerId);
+            var clinicOwner = _currentUserService.GetCurrentUserId();
 
             if (clinicOwner == null)
             {
@@ -88,10 +90,10 @@ namespace API.Services
                 NIP = addClinicDto.NIP,
                 IsNFZ = addClinicDto.IsNFZ,
                 IsPrivate = addClinicDto.IsPrivate,
-                ClinicOwnerId = ownerId,
+                ClinicOwnerId = Guid.Parse(clinicOwner),
                 OfficeHoursStartDate = addClinicDto.OfficeHoursStartDate,
                 OfficeHoursEndDate = addClinicDto.OfficeHoursEndDate,
-                WorkingDays = addClinicDto.WorkingDays
+                PhoneNumber = addClinicDto.PhoneNumber
             };
 
             _context.Clinics.Add(newClinic);
@@ -122,7 +124,6 @@ namespace API.Services
             clinic.IsPrivate = clinicDto.IsPrivate;
             clinic.OfficeHoursStartDate = clinicDto.OfficeHoursStartDate;
             clinic.OfficeHoursEndDate = clinicDto.OfficeHoursEndDate;
-            clinic.WorkingDays = clinicDto.WorkingDays;
 
             await _context.SaveChangesAsync();
 
@@ -194,6 +195,21 @@ namespace API.Services
 
             _context.ClinicDoctors.Remove(clinicDoctor);
             await _context.SaveChangesAsync();
+        }
+
+
+        public async Task<List<Clinic>> GetAllClinics()
+        {
+            var user = _currentUserService.GetCurrentUserId();
+            var clinics = await _context.Clinics.Where(x => x.ClinicOwnerId.ToString() == user).ToListAsync();
+
+            return clinics;
+        }
+
+        public async Task<Clinic> GetClinicById(Guid clinicId)
+        {
+            var clinic = await _context.Clinics.FirstOrDefaultAsync(x => x.Id == clinicId);
+            return clinic;
         }
 
     }

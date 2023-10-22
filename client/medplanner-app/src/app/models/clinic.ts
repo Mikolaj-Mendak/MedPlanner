@@ -11,5 +11,6 @@ export interface Clinic {
     clinicDoctors?: ClinicDoctor[];
     officeHoursStartDate?: Date;
     officeHoursEndDate?: Date;
-    workingDays?: string[]; // Załóżmy, że dni robocze są reprezentowane jako stringi (np. "Monday", "Tuesday", itd.).
+    workingDays?: string[];
+    phoneNumber?: string;
 }

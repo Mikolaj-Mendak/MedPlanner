@@ -1,0 +1,47 @@
+<div class="login-dialog-container">
+    <div class="inputs-container">
+        <form [formGroup]="addClinicForm">
+            <input class="form-control inputs" id="name" formControlName="name" type="text" placeholder="Nazwa"
+                [ngClass]="{ 'invalid-field': addClinicForm.get('name').invalid && (addClinicForm.get('name').dirty || addClinicForm.get('name').touched) }">
+
+            <input class="form-control inputs" id="address" formControlName="address" type="text" placeholder="Adres">
+            <input class="form-control inputs" id="nip" formControlName="nip" type="text" placeholder="NIP">
+            <input class="form-control inputs" id="phoneNumber" formControlName="phoneNumber" type="string"
+                placeholder="Telefon">
+            <div class="radio-options">
+                <div class="form-check mr-sm-2">
+                    <input class="form-check-input" type="radio" formControlName="isNFZ" [value]=true id="isNFZ">
+                    <label class="form-check-label" for="isNFZ">NFZ</label>
+                </div>
+                <div class="form-check mr-sm-2">
+                    <input class="form-check-input" type="radio" formControlName="isPrivate" [value]=true
+                        id="isPrivate">
+                    <label class="form-check-label" for="isPrivate">Prywatnie</label>
+                </div>
+            </div>
+            <input class="form-control inputs" id="officeHoursStartDate" formControlName="officeHoursStartDate"
+                type="time" placeholder="Godzina rozpoczęcia">
+
+            <input class="form-control inputs" id="officeHoursEndDate" formControlName="officeHoursEndDate" type="time"
+                placeholder="Godzina zakończenia">
+
+            <div class="form-group">
+                <label for="workingDays"></label>
+                <div *ngFor="let day of daysOfWeek">
+                    <label>
+                        <input style=" margin-right: 10px;" ngbButton type="checkbox" [value]="day.value"
+                            formControlName="workingDays">{{ day.label
+                        }}
+                    </label>
+                </div>
+            </div>
+
+
+            <div class="button-container">
+                <button type="submit" class="btn custom-button" (click)="onSubmit()" [disabled]="!addClinicForm.valid">
+                    Dodaj
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

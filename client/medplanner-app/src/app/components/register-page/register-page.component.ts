@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { PatientRegisterDialogComponent } from './components/patient-register-dialog/patient-register-dialog.component';
 import { ToastrService } from 'ngx-toastr';
-import { OwnerRegisterDialogComponent } from './components/owner-register-dialog/owner-register-dialog.component';
-import { DoctorRegisterDialogComponent } from './components/doctor-register-dialog/doctor-register-dialog.component';
+import { DoctorRegisterDialogComponent } from '../doctor-register-dialog/doctor-register-dialog.component';
+import { OwnerRegisterDialogComponent } from '../owner-register-dialog/owner-register-dialog.component';
+import { PatientRegisterDialogComponent } from '../patient-register-dialog/patient-register-dialog.component';
 
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss']
+    selector: 'app-register-page',
+    templateUrl: './register-page.component.html',
+    styleUrls: ['./register-page.component.scss']
 })
-export class AppComponent {
+export class RegisterPageComponent {
 
     constructor(private dialog: MatDialog, private toastr: ToastrService) {
 
@@ -46,5 +46,4 @@ export class AppComponent {
         dialogRef.afterClosed().subscribe(result => {
         });
     }
-
 }

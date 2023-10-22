@@ -45,10 +45,10 @@ namespace API.Controllers
                     return NoContent();
             }
 
-            [HttpPost("{ownerId}/clinics")]
-            public async Task<ActionResult<Clinic>> AddClinic(Guid ownerId, [FromBody] AddClinicDto addClinicDto)
+            [HttpPost("clinics")]
+            public async Task<ActionResult<Clinic>> AddClinic([FromBody] AddClinicDto addClinicDto)
             {
-                var clinic = await _clinicOwnerService.AddClinic(ownerId, addClinicDto);
+                var clinic = await _clinicOwnerService.AddClinic(addClinicDto);
                 return Ok(clinic);
             }
 
@@ -59,7 +59,23 @@ namespace API.Controllers
                 return NoContent();
             }
 
-            [HttpPost("clinics/{clinicId}/doctors/{doctorId}")]
+
+            [HttpGet("clinics")]
+            public async Task<ActionResult<List<Clinic>>> GetAllClinics()
+            {
+                var owners = await _clinicOwnerService.GetAllClinics();
+                return Ok(owners);
+            }
+
+            [HttpGet("clinics/{clinicId}")]
+            public async Task<ActionResult<Clinic>> GetClinicById(Guid clinicId)
+            {
+                var owner = await _clinicOwnerService.GetClinicById(clinicId);
+                return Ok(owner);
+            }
+
+
+        [HttpPost("clinics/{clinicId}/doctors/{doctorId}")]
             public async Task<IActionResult> AddDoctorToClinic(Guid clinicId, Guid doctorId)
             {
                     await _clinicOwnerService.AddDoctorToClinicAsync(clinicId, doctorId);

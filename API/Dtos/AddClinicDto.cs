@@ -12,6 +12,7 @@ namespace API.Dtos
         public ICollection<ClinicDoctor>? ClinicDoctors { get; set; }
         public DateTime? OfficeHoursStartDate { get; set; }
         public DateTime? OfficeHoursEndDate { get; set; }
-        public List<DayOfWeek>? WorkingDays { get; set; }
+        public List<int>? WorkingDays { get; set; }
+        public string? PhoneNumber { get; set; }
     }
 }

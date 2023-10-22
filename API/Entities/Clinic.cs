@@ -15,5 +15,6 @@ namespace API.Entities
         public DateTime? OfficeHoursStartDate { get; set; }
         public DateTime? OfficeHoursEndDate { get; set; }
         public List<DayOfWeek>? WorkingDays { get; set; }
+        public string PhoneNumber { get; set; }
     }
 }
