@@ -1,0 +1,25 @@
+<div class="details-container" *ngIf="doctorAdmission$ | async as doctorAdmission">
+    <div class="details-column">
+        <h1 style="margin-top: 2em; border-bottom: 1px solid white;">Szczegóły umowy lekarskiej
+            <mat-icon>edit</mat-icon>
+        </h1>
+        <div class="column-content">
+            <ng-container>
+                <p><strong>Specjalizacja:</strong> {{ doctorAdmission.specialization}}</p>
+                <p><strong>Koszt konsultacji:</strong> {{ doctorAdmission.consultationFee }} PLN</p>
+                <p><strong>Dni pracy:</strong> {{ doctorAdmission.workingDays }}</p>
+                <p><strong>Godzina rozpoczęcia:</strong> {{ formatTime(doctorAdmission.workHoursStart) }}</p>
+                <p><strong>Godzina zakończenia:</strong> {{ formatTime(doctorAdmission.workHoursEnd) }}</p>
+                <p><strong>Typ kliniki:</strong> {{ doctorAdmission.isNfz ? 'Klinika NFZ' : 'Klinika prywatna' }}</p>
+            </ng-container>
+            <div class="buttons-container">
+                <button type="submit" class="btn custom-button">
+                    Zapisz
+                </button>
+                <button type="submit" class="btn custom-button">
+                    Powrót
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

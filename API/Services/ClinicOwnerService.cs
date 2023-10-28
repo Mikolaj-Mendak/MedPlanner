@@ -212,5 +212,35 @@ namespace API.Services
             return clinic;
         }
 
+        public async Task AddDoctorToClinicByNumber(Guid clinicId, string doctorNumber)
+        {
+            var clinic = await _context.Clinics.FindAsync(clinicId);
+            if (clinic == null)
+            {
+                throw new ApplicationException("Klinika nie istnieje.");
+            }
+
+            var doctor = await _context.Doctors.FirstOrDefaultAsync(d => d.DoctorNumber == doctorNumber);
+            if (doctor == null)
+            {
+                throw new ApplicationException("Lekarz nie istnieje.");
+            }
+
+            var existingRelationship = await _context.ClinicDoctors.FindAsync(clinicId, doctor.Id);
+            if (existingRelationship != null)
+            {
+                throw new ApplicationException("Lekarz jest już przypisany do kliniki.");
+            }
+
+            var clinicDoctor = new ClinicDoctor
+            {
+                ClinicId = clinicId,
+                DoctorId = doctor.Id
+            };
+
+            _context.ClinicDoctors.Add(clinicDoctor);
+            await _context.SaveChangesAsync();
+        }
+
     }
 }

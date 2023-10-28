@@ -31,4 +31,20 @@ export class ClinicOwnerServiceService {
         const url = `${environment.apiUrl}/clinicowner/clinics/${clinicId}`;
         return this.http.get<Clinic>(url);
     }
+
+    addDoctorToClinic(clinicId: string, doctorId: string): Observable<any> {
+        const url = `${environment.apiUrl}/clinicowner/clinics/${clinicId}/doctors/${doctorId}`;
+        return this.http.post(url, null);
+    }
+
+    addDoctorToClinicByNumber(clinicId: string, doctorNumber: string): Observable<any> {
+        const url = `${environment.apiUrl}/clinicowner/clinics/${clinicId}/doctorNumber/${doctorNumber}`;
+        return this.http.post(url, null);
+    }
+
+    removeDoctorFromClinic(clinicId: string, doctorId: string): Observable<void> {
+        const url = `${environment.apiUrl}/clinicowner/removeDoctor/clinics/${clinicId}/doctors/${doctorId}`;
+        return this.http.delete<void>(url);
+    }
+
 }

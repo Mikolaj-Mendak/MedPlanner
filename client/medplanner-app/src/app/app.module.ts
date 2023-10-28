@@ -23,6 +23,8 @@ import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { ClinicDetailsComponent } from './components/clinic-details/clinic-details.component';
+import { AddDoctorToClinicComponent } from './components/add-doctor-to-clinic/add-doctor-to-clinic.component';
+import { DoctorAdmissionPageComponent } from './components/doctor-admission-page/doctor-admission-page.component';
 
 
 @NgModule({
@@ -36,7 +38,9 @@ import { ClinicDetailsComponent } from './components/clinic-details/clinic-detai
         OwnerClinicsComponent,
         RegisterPageComponent,
         AddClinicComponent,
-        ClinicDetailsComponent
+        ClinicDetailsComponent,
+        AddDoctorToClinicComponent,
+        DoctorAdmissionPageComponent
     ],
     imports: [
         BrowserModule,

@@ -126,6 +126,19 @@ namespace API.Services
             await _context.SaveChangesAsync();
         }
 
+        public async Task<List<Doctor>> GetDoctorsByClinicId(Guid clinicId)
+        {
+            return await _context.ClinicDoctors
+                .Where(cd => cd.ClinicId == clinicId)
+                .Select(cd => cd.Doctor)
+                .ToListAsync();
+        }
+
+        public async Task<DoctorAdmissionConditions> GetAdmissionByClinicAndDoctor(Guid doctorId, Guid clinicId)
+        {
+            var x = await _context.DoctorAdmissionConditions.FirstOrDefaultAsync(x => x.DoctorId == doctorId && x.ClinicId == clinicId);
+            return x;
+        }
 
     }
 }

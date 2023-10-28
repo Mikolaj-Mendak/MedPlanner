@@ -1,0 +1,14 @@
+<div class="login-dialog-container">
+    <div class="inputs-container">
+        <form [formGroup]="addDoctorToClinic">
+            <input class="form-control inputs" id="doctorNumber" formControlName="doctorNumber" type="text"
+                placeholder="Numer lekarski">
+            <div class="button-container">
+                <button type="submit" class="btn custom-button" (click)="onSubmit()"
+                    [disabled]="!addDoctorToClinic.valid">
+                    Dodaj
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

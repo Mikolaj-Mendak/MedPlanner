@@ -11,5 +11,7 @@ namespace API.Services.Interfaces
         Task AddAdmissionConditionToDoctor(Guid doctorId, DoctorAdmissionConditions admissionCondition);
         Task DeleteAdmissionConditionForDoctor(Guid doctorId, Guid admissionConditionId);
         Task UpdateAdmissionConditionForDoctor(Guid doctorId, Guid admissionConditionId, DoctorAdmissionConditions updatedAdmissionCondition);
+        Task<List<Doctor>> GetDoctorsByClinicId(Guid clinicId);
+        Task<DoctorAdmissionConditions> GetAdmissionByClinicAndDoctor(Guid doctorId,Guid clinicId);
     }
 }

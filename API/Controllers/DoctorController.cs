@@ -23,6 +23,13 @@ namespace API.Controllers
             return Ok(result);
         }
 
+        [HttpGet("doctorsByClinic/{clinicId}")]
+        public async Task<ActionResult<IEnumerable<Doctor>>> GetDoctorsByClinicId(Guid clinicId)
+        {
+            var result = await _doctorService.GetDoctorsByClinicId(clinicId);
+            return Ok(result);
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<IEnumerable<Doctor>>> GetDoctor(Guid id)
         {
@@ -84,6 +91,13 @@ namespace API.Controllers
             await _doctorService.UpdateAdmissionConditionForDoctor(doctorId, admissionConditionId, updatedAdmissionCondition);
 
             return Ok();
+        }
+
+        [HttpGet("getAdmissionByClinicAndDoctor/{doctorId}/{clinicId}")]
+        public async Task<IActionResult> GetAdmissionByClinicAndDoctor(Guid doctorId, Guid clinicId)
+        {
+            var x = await _doctorService.GetAdmissionByClinicAndDoctor(doctorId, clinicId);
+            return Ok(x);
         }
 
     }

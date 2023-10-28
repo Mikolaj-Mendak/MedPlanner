@@ -16,6 +16,7 @@ namespace API.Services.Interfaces
         Task AddDoctorToClinicAsync(Guid clinicId, Guid doctorId);
         Task<List<Clinic>> GetAllClinics();
         Task<Clinic> GetClinicById(Guid clinicId);
+        Task AddDoctorToClinicByNumber(Guid clinicId, string doctorNumber);
 
     }
 }

@@ -1,9 +1,7 @@
 ﻿using API.Dtos;
 using API.Entities;
-using API.Services;
 using API.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
@@ -75,20 +73,26 @@ namespace API.Controllers
             }
 
 
-        [HttpPost("clinics/{clinicId}/doctors/{doctorId}")]
+            [HttpPost("clinics/{clinicId}/doctors/{doctorId}")]
             public async Task<IActionResult> AddDoctorToClinic(Guid clinicId, Guid doctorId)
             {
                     await _clinicOwnerService.AddDoctorToClinicAsync(clinicId, doctorId);
                     return NoContent();
             }
 
-            [HttpDelete("clinics/{clinicId}/doctors/{doctorId}")]
+            [HttpDelete("removeDoctor/clinics/{clinicId}/doctors/{doctorId}")]
             public async Task<IActionResult> RemoveDoctorFromClinic(Guid clinicId, Guid doctorId)
             {
                 await _clinicOwnerService.RemoveDoctorFromClinicAsync(clinicId, doctorId);
                 return NoContent();
             }
-        }
 
+            [HttpPost("clinics/{clinicId}/doctorNumber/{doctorNumber}")]
+            public async Task<IActionResult> AddDoctorToClinicByNumber(Guid clinicId, string doctorNumber)
+            {
+                await _clinicOwnerService.AddDoctorToClinicByNumber(clinicId, doctorNumber);
+                return NoContent();
+            }
+        }
     
     }
