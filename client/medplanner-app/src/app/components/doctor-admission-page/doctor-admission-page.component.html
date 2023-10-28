@@ -7,7 +7,7 @@
             <ng-container>
                 <p><strong>Specjalizacja:</strong> {{ doctorAdmission.specialization}}</p>
                 <p><strong>Koszt konsultacji:</strong> {{ doctorAdmission.consultationFee }} PLN</p>
-                <p><strong>Dni pracy:</strong> {{ doctorAdmission.workingDays }}</p>
+                <p><strong>Dni pracy:</strong> {{ formatWorkingDays(doctorAdmission.workingDays) }}</p>
                 <p><strong>Godzina rozpoczęcia:</strong> {{ formatTime(doctorAdmission.workHoursStart) }}</p>
                 <p><strong>Godzina zakończenia:</strong> {{ formatTime(doctorAdmission.workHoursEnd) }}</p>
                 <p><strong>Typ kliniki:</strong> {{ doctorAdmission.isNfz ? 'Klinika NFZ' : 'Klinika prywatna' }}</p>

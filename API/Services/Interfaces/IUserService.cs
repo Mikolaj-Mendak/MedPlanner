@@ -1,4 +1,5 @@
-﻿using API.Entities;
+﻿using API.Dtos;
+using API.Entities;
 
 namespace API.Services.Interfaces
 {
@@ -9,5 +10,6 @@ namespace API.Services.Interfaces
         Task AddUserAsync(User user);
         Task UpdateUserAsync(Guid id, User updatedUser);
         Task<User> GetUserByEmailAsync(string email);
+        Task<UserDetailsDto> GetUserDetailsByEmailAsync(string email);
     }
 }

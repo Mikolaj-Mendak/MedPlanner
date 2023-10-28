@@ -24,7 +24,6 @@ export class DoctorService {
 
     getAdmissionByClinicAndDoctor(doctorId: string, clinicId: string): Observable<DoctorAdmissionConditions> {
         const url = `${environment.apiUrl}/doctor/getAdmissionByClinicAndDoctor/${doctorId}/${clinicId}`;
-        console.log(url)
         return this.http.get<DoctorAdmissionConditions>(url);
     }
 

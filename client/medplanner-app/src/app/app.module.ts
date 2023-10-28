@@ -25,6 +25,7 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { ClinicDetailsComponent } from './components/clinic-details/clinic-details.component';
 import { AddDoctorToClinicComponent } from './components/add-doctor-to-clinic/add-doctor-to-clinic.component';
 import { DoctorAdmissionPageComponent } from './components/doctor-admission-page/doctor-admission-page.component';
+import { UserProfilePageComponent } from './components/user-profile-page/user-profile-page.component';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { DoctorAdmissionPageComponent } from './components/doctor-admission-page
         AddClinicComponent,
         ClinicDetailsComponent,
         AddDoctorToClinicComponent,
-        DoctorAdmissionPageComponent
+        DoctorAdmissionPageComponent,
+        UserProfilePageComponent
     ],
     imports: [
         BrowserModule,

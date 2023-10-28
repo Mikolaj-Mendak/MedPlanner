@@ -12,6 +12,7 @@ import { DoctorService } from 'src/app/services/doctor-service';
 
 export class DoctorAdmissionPageComponent implements OnInit {
     doctorAdmission$: Observable<DoctorAdmissionConditions>;
+    daysOfWeek = ['Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek'];
 
     constructor(
         private doctorService: DoctorService,
@@ -47,5 +48,10 @@ export class DoctorAdmissionPageComponent implements OnInit {
             return `${hours}:${minutes}`;
         }
         return '';
+    }
+
+    formatWorkingDays(workingDays: number[]): string {
+        const days = workingDays.map(day => this.daysOfWeek[day - 1]);
+        return days.join(', ');
     }
 }

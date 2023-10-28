@@ -1,0 +1,24 @@
+<div class="details-container" *ngIf="userDetails$ | async as userDetails">
+    <div class="details-column">
+        <h1 style="margin-top: 2em; border-bottom: 1px solid white;">Szczegóły umowy lekarskiej
+            <mat-icon>edit</mat-icon>
+        </h1>
+        <div class="column-content">
+            <ng-container>
+                <p><strong>Imie:</strong> {{ userDetails.firstName}}</p>
+                <p><strong>Nazwisko:</strong> {{ userDetails.lastName }} PLN</p>
+                <p><strong>Pesel:</strong> {{ userDetails.pesel }}</p>
+                <p><strong>Email:</strong> {{ userDetails.email }}</p>
+                <p *ngIf="doctorNumber"><strong>Numer lekarski:</strong> {{ userDetails.doctorNumber }}</p>
+            </ng-container>
+            <div class="buttons-container">
+                <button type="submit" class="btn custom-button">
+                    Zapisz
+                </button>
+                <button type=" submit" class="btn custom-button">
+                    Powrót
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

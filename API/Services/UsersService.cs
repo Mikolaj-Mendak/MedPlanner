@@ -1,7 +1,9 @@
 ﻿using API.Authorization.Helpers;
 using API.Data;
+using API.Dtos;
 using API.Entities;
 using API.Services.Interfaces;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Services
@@ -9,6 +11,7 @@ namespace API.Services
     public class UsersService : IUsersService
     {
         private readonly DataContext _context;
+        private readonly IMapper _mapper;
 
         public UsersService(DataContext context)
         {
@@ -67,5 +70,42 @@ namespace API.Services
         {
             return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
         }
+
+        public async Task<UserDetailsDto> GetUserDetailsByEmailAsync(string email)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+
+            if (user == null)
+            {
+                return null; 
+            }
+
+            UserDetailsDto userDetailsDto;
+
+            if (user is Doctor doctor)
+            {
+                userDetailsDto = new UserDetailsDto
+                {
+                    FirstName = doctor.FirstName,
+                    LastName = doctor.LastName,
+                    Pesel = doctor.Pesel,
+                    Email = doctor.Email,
+                    DoctorNumber = doctor.DoctorNumber
+                };
+            }
+            else
+            {
+                userDetailsDto = new UserDetailsDto
+                {
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Pesel = user.Pesel,
+                    Email = user.Email
+                };
+            }
+
+            return userDetailsDto;
+        }
+
     }
 }

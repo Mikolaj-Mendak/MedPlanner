@@ -1,11 +1,11 @@
-﻿using API.Entities;
+﻿using API.Dtos;
+using API.Entities;
 using API.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    [Authorize]
     public class UsersController : BaseController
     {
         private readonly IUsersService _userService;
@@ -49,5 +49,20 @@ namespace API.Controllers
             await _userService.UpdateUserAsync(id, updatedUser);
             return NoContent();
         }
+
+        [HttpGet("details/by-email")]
+        public async Task<ActionResult<UserDetailsDto>> GetUserDetailsByEmailAsync([FromQuery] string email)
+        {
+            var user = await _userService.GetUserDetailsByEmailAsync(email);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(user);
+        }
+
+
     }
 }
