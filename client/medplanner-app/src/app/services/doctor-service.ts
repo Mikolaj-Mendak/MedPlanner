@@ -4,6 +4,7 @@ import { Doctor } from '../models/doctor';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environment';
 import { DoctorAdmissionConditions } from '../models/doctor-admission';
+import { Clinic } from '../models/clinic';
 
 @Injectable({
     providedIn: 'root'
@@ -24,6 +25,21 @@ export class DoctorService {
 
     getAdmissionByClinicAndDoctor(doctorId: string, clinicId: string): Observable<DoctorAdmissionConditions> {
         const url = `${environment.apiUrl}/doctor/getAdmissionByClinicAndDoctor/${doctorId}/${clinicId}`;
+        return this.http.get<DoctorAdmissionConditions>(url);
+    }
+
+    getClinicsForDoctor(): Observable<Clinic[]> {
+        const url = `${environment.apiUrl}/doctor/clinics`;
+        return this.http.get<Clinic[]>(url);
+    }
+
+    resingFromClinic(clinicId: string): Observable<void> {
+        const url = `${environment.apiUrl}/doctor/clinics/${clinicId}`;
+        return this.http.delete<void>(url);
+    }
+
+    getAdmissionByClinicForDoctor(clinicId: string): Observable<DoctorAdmissionConditions> {
+        const url = `${environment.apiUrl}/doctor/getAdmissionByClinicForDoctor/${clinicId}`;
         return this.http.get<DoctorAdmissionConditions>(url);
     }
 

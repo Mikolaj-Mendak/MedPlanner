@@ -3,6 +3,8 @@ using API.Entities;
 using API.Services;
 using API.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 namespace API.Controllers
 {
@@ -100,5 +102,33 @@ namespace API.Controllers
             return Ok(x);
         }
 
+        [HttpGet("getAdmissionByClinicForDoctor/{clinicId}")]
+        public async Task<IActionResult> GetAdmissionByClinicForDoctor(Guid doctorId, Guid clinicId)
+        {
+            var x = await _doctorService.GetAdmissionByClinicForDoctor(clinicId);
+            return Ok(x);
+        }
+
+        [HttpGet("clinics")]
+        public async Task<ActionResult<string>> GetClinicsForDoctor()
+        {
+            var options = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.Preserve,
+            };
+
+            var clinics = await _doctorService.GetClinicsForDoctor();
+
+            var clinicsJson = JsonSerializer.Serialize(clinics, options);
+
+            return Ok(clinicsJson);
+        }
+
+        [HttpDelete("clinics/{clinicId}")]
+        public async Task<IActionResult> ResignFromClinic(Guid clinicId)
+        {
+            await _doctorService.ResignFromClinic(clinicId);
+            return NoContent();
+        }
     }
 }

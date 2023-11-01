@@ -13,5 +13,8 @@ namespace API.Services.Interfaces
         Task UpdateAdmissionConditionForDoctor(Guid doctorId, Guid admissionConditionId, DoctorAdmissionConditions updatedAdmissionCondition);
         Task<List<Doctor>> GetDoctorsByClinicId(Guid clinicId);
         Task<DoctorAdmissionConditions> GetAdmissionByClinicAndDoctor(Guid doctorId,Guid clinicId);
+        Task<DoctorAdmissionConditions> GetAdmissionByClinicForDoctor(Guid clinicId);
+        Task<List<Clinic>> GetClinicsForDoctor();
+        Task ResignFromClinic(Guid clinicId);
     }
 }

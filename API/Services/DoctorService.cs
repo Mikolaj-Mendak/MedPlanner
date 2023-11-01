@@ -1,6 +1,7 @@
 ﻿using API.Data;
 using API.Dtos;
 using API.Entities;
+using API.Migrations;
 using API.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,10 +10,12 @@ namespace API.Services
     public class DoctorService : IDoctorService
     {
         private readonly DataContext _context;
+        private readonly IUserProviderService _currentUserService;
 
-        public DoctorService(DataContext context)
+        public DoctorService(DataContext context, IUserProviderService currentUserService)
         {
             _context=context;
+            _currentUserService=currentUserService;
         }
 
         public async Task<Doctor> GetDoctor(Guid doctorId)
@@ -138,6 +141,40 @@ namespace API.Services
         {
             var x = await _context.DoctorAdmissionConditions.FirstOrDefaultAsync(x => x.DoctorId == doctorId && x.ClinicId == clinicId);
             return x;
+        }
+
+        public async Task<DoctorAdmissionConditions> GetAdmissionByClinicForDoctor(Guid clinicId)
+        {
+            var doctorId = _currentUserService.GetCurrentUserId();
+            var x = await _context.DoctorAdmissionConditions.FirstOrDefaultAsync(x => x.DoctorId.ToString() == doctorId && x.ClinicId == clinicId);
+            return x;
+        }
+
+        public async Task<List<Clinic>> GetClinicsForDoctor()
+        {
+            var doctorId = "c560d7be-d9c6-4c5c-8188-bd4686c742c1";
+
+            var clinicDoctorRelations = await _context.ClinicDoctors
+                .Where(x => x.DoctorId.ToString() == doctorId)
+                .ToListAsync();
+
+            List<Guid?> clinicIds = clinicDoctorRelations.Select(x => x?.ClinicId).ToList();
+            List<Clinic> clinics = new List<Clinic>();
+
+            foreach (var clinicId in clinicIds)
+            {
+                var clinic = _context.Clinics.FirstOrDefault(x => x.Id == clinicId);
+                clinics.Add(clinic);
+            }
+
+            return clinics;
+        }
+
+        public async Task ResignFromClinic(Guid clinicId)
+        {
+            var clinicDoctorRelation = await _context.ClinicDoctors.FirstOrDefaultAsync(x => x.ClinicId == clinicId);
+            _context.Remove(clinicDoctorRelation);
+            await _context.SaveChangesAsync();
         }
 
     }

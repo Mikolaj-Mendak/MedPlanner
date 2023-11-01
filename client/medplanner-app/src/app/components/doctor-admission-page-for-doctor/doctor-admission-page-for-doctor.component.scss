@@ -67,6 +67,22 @@
     cursor: pointer; 
 }
 
+.set-admission-custom-button{
+    width: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5em;
+    align-self: center;
+    height: 40px;
+    background-color: #00aaa4;
+    color: white;
+    border: none; 
+    border-radius: 4px; 
+    cursor: pointer; 
+    margin-left: 29em;
+}
+
 .table-wrapper {
     display: flex;
     flex-direction: column;

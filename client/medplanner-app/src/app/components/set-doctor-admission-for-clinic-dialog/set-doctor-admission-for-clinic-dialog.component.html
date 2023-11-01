@@ -1,0 +1,44 @@
+<div class="login-dialog-container">
+    <h2 style="padding-top: 1em; padding-bottom: 0.3em;">Warunki umowy</h2>
+
+    <div class="inputs-container">
+        <form [formGroup]="admissionForm" (ngSubmit)="onSubmit()">
+            <input class="form-control inputs" placeholder="Specjalizacja" id="specialization"
+                formControlName="specialization">
+            <div class="radio-options">
+                <div class="form-check mr-sm-2">
+                    <input class="form-check-input" type="radio" formControlName="isNFZ" [value]=true id="isNFZ">
+                    <label class="form-check-label" for="isNFZ">NFZ</label>
+                </div>
+                <div class="form-check mr-sm-2">
+                    <input class="form-check-input" type="radio" formControlName="isPrivate" [value]=true
+                        id="isPrivate">
+                    <label class="form-check-label" for="isPrivate">Prywatnie</label>
+                </div>
+            </div>
+            <div style="margin-top: 1em;">Kosz konsultacji</div>
+            <input class="form-control inputs" placeholder="Kosz konsultacji" id="consultationFee"
+                formControlName="consultationFee" type="number">
+            <div style="margin-top: 1em;">Godziny pracy</div>
+            <input class="form-control inputs" placeholder="Work Hours Start" id="workHoursStart"
+                formControlName="workHoursStart" type="time">
+            <input class="form-control inputs" placeholder="Work Hours End" id="workHoursEnd"
+                formControlName="workHoursEnd" type="time">
+            <div class="form-group">
+                <label for="workingDays"></label>
+                <div *ngFor="let day of daysOfWeek">
+                    <label>
+                        <input style=" margin-right: 10px;" ngbButton type="checkbox" [value]="day.value"
+                            formControlName="workingDays">{{ day.label
+                        }}
+                    </label>
+                </div>
+            </div>
+            <div class="button-container">
+                <button type="submit" class="btn custom-button">
+                    Ustaw
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

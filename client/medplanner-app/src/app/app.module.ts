@@ -26,6 +26,9 @@ import { ClinicDetailsComponent } from './components/clinic-details/clinic-detai
 import { AddDoctorToClinicComponent } from './components/add-doctor-to-clinic/add-doctor-to-clinic.component';
 import { DoctorAdmissionPageComponent } from './components/doctor-admission-page/doctor-admission-page.component';
 import { UserProfilePageComponent } from './components/user-profile-page/user-profile-page.component';
+import { DoctorClinicPageComponent } from './components/doctor-clinic-page/doctor-clinic-page.component';
+import { DoctorAdmissionPageForDoctorComponent } from './components/doctor-admission-page-for-doctor/doctor-admission-page-for-doctor.component';
+import { SetDoctorAdmissionForClinicDialogComponent } from './components/set-doctor-admission-for-clinic-dialog/set-doctor-admission-for-clinic-dialog.component';
 
 
 @NgModule({
@@ -42,7 +45,10 @@ import { UserProfilePageComponent } from './components/user-profile-page/user-pr
         ClinicDetailsComponent,
         AddDoctorToClinicComponent,
         DoctorAdmissionPageComponent,
-        UserProfilePageComponent
+        UserProfilePageComponent,
+        DoctorClinicPageComponent,
+        DoctorAdmissionPageForDoctorComponent,
+        SetDoctorAdmissionForClinicDialogComponent
     ],
     imports: [
         BrowserModule,

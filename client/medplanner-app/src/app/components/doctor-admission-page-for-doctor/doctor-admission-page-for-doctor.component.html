@@ -22,3 +22,16 @@
         </div>
     </div>
 </div>
+<div class="details-container" *ngIf="!(doctorAdmission$ | async)">
+    <div class="details-column">
+        <h1 style="margin-top: 2em; border-bottom: 1px solid white;">Szczegóły umowy lekarskiej
+        </h1>
+        <div class="column-content">
+            <ng-container>
+                <p>Warunki umowy nie zostały zdefiniowane</p>
+            </ng-container>
+            <button type="submit" class="btn set-admission-custom-button" (click)="openDialog()"> Ustal warunki umowy
+            </button>
+        </div>
+    </div>
+</div>

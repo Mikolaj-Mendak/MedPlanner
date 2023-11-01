@@ -1,0 +1,32 @@
+<div class="table-wrapper">
+    <h1 class="page-header">Moje przychodnie pracy</h1>
+    <hr />
+    <div class="button-container">
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Nazwa</th>
+                <th>Adres</th>
+                <th style="width: 100px;"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let clinic of (clinics$ | async)">
+                <td>{{ clinic.Name }}</td>
+                <td>{{ clinic.Address
+                    }}</td>
+                <td>
+                    <button style="background-color: transparent; border: none; color: red;" mat-icon-button
+                        (click)="resignFromClinic(clinic.Id)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                    <button style="background-color: transparent; border: none; color: blue;" mat-icon-button
+                        (click)="showAdmission(clinic.Id)">
+                        <mat-icon>description</mat-icon>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -93,6 +93,6 @@ namespace API.Controllers
                 await _clinicOwnerService.AddDoctorToClinicByNumber(clinicId, doctorNumber);
                 return NoContent();
             }
-        }
-    
+
     }
+}
