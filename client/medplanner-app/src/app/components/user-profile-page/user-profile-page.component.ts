@@ -21,13 +21,8 @@ export class UserProfilePageComponent implements OnInit {
 
     }
 
-    test() {
-        this.fetchUserDetails();
-    }
-
     private fetchUserDetails() {
         const userEmail = localStorage.getItem('currentUser') ? JSON.parse(localStorage.getItem('currentUser')).email : null;
         this.userDetails$ = this.usersService.getUserDetailsByEmail(userEmail.toString());
     }
-
 }
