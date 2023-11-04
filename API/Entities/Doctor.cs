@@ -1,4 +1,6 @@
 ﻿
+using API.Enums;
+
 namespace API.Entities
 {
     public class Doctor : User

@@ -5,6 +5,8 @@ using API.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json.Serialization;
 using System.Text.Json;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace API.Controllers
 {
@@ -12,10 +14,12 @@ namespace API.Controllers
     {
 
         private readonly IDoctorService _doctorService;
+        private readonly IUserProviderService _currentUserService;
 
-        public DoctorController(IDoctorService doctorService)
+        public DoctorController(IDoctorService doctorService, IUserProviderService currentUserService)
         {
             _doctorService = doctorService;
+            _currentUserService = currentUserService;
         }
 
         [HttpGet]
@@ -46,10 +50,11 @@ namespace API.Controllers
 
             return NoContent();
         }
-
-        [HttpPost("{doctorId}/admissionconditions")]
-        public async Task<IActionResult> AddAdmissionCondition(Guid doctorId, [FromBody] DoctorAdmissionConditionsDto admissionConditionDto)
+        [HttpPost("admission")]
+        public async Task<IActionResult> AddAdmissionCondition( [FromBody] DoctorAdmissionConditionsDto? admissionConditionDto)
         {
+            var doctorId = _currentUserService.GetCurrentUserId();
+
             var admissionCondition = new DoctorAdmissionConditions
             {
                 Specialization = admissionConditionDto.Specialization,
@@ -60,12 +65,13 @@ namespace API.Controllers
                 WorkHoursStart = admissionConditionDto.WorkHoursStart,
                 WorkHoursEnd = admissionConditionDto.WorkHoursEnd,
                 ClinicId = admissionConditionDto.ClinicId,
-                DoctorId = doctorId
+                DoctorId = Guid.Parse(doctorId)
             };
 
-            await _doctorService.AddAdmissionConditionToDoctor(doctorId, admissionCondition);
+            await _doctorService.AddAdmissionConditionToDoctor(admissionCondition);
             return NoContent();
         }
+
 
 
 

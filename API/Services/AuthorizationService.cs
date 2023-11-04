@@ -1,6 +1,7 @@
 ﻿using API.Authorization.Helpers;
 using API.Dtos;
 using API.Entities;
+using API.Enums;
 using API.Services.Interfaces;
 
 namespace API.Services
@@ -42,7 +43,8 @@ namespace API.Services
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Email = user.Email,
-                Token = token
+                Token = token,
+                Role = user.Role
             };
 
             return userDto;
@@ -64,7 +66,8 @@ namespace API.Services
                 Email = registerDto.Email,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
-                Pesel = registerDto.Pesel
+                Pesel = registerDto.Pesel,
+                Role = UserRoleEnum.User
             };
 
             await _usersService.AddUserAsync(newUser);
@@ -76,7 +79,8 @@ namespace API.Services
                 FirstName = newUser.FirstName,
                 LastName = newUser.LastName,
                 Email = newUser.Email,
-                Token = token
+                Token = token,
+                Role = newUser.Role
             };
 
             return authResult;
@@ -99,7 +103,8 @@ namespace API.Services
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
                 DoctorNumber = registerDoctorDto.DoctorNumber,
-                Pesel = registerDoctorDto.Pesel 
+                Pesel = registerDoctorDto.Pesel,
+                Role = UserRoleEnum.Doctor
 
             };
 
@@ -113,7 +118,8 @@ namespace API.Services
                 LastName = newDoctor.LastName,
                 Email = newDoctor.Email,
                 Token = token,
-                DoctorNumber = newDoctor.DoctorNumber
+                DoctorNumber = newDoctor.DoctorNumber,
+                Role = newDoctor.Role
             };
 
             return authResult;
@@ -136,7 +142,8 @@ namespace API.Services
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
                 Pesel = registerOwnerDto.Pesel,
-                Clinic = registerOwnerDto?.Clinic
+                Clinic = registerOwnerDto?.Clinic,
+                Role = UserRoleEnum.ClinicOwner,
 
             };
 
@@ -150,7 +157,8 @@ namespace API.Services
                 LastName = newOwner.LastName,
                 Email = newOwner.Email,
                 Token = token,
-                Clinic = newOwner.Clinic
+                Clinic = newOwner.Clinic,
+                Role = newOwner.Role
             };
 
             return authResult;

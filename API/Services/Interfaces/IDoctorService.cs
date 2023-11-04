@@ -8,7 +8,7 @@ namespace API.Services.Interfaces
         Task<Doctor> GetDoctor(Guid doctorId);
         Task<List<Doctor>> GetAllDoctors();
         Task UpdateDoctor(Guid doctorId, DoctorUpdateDto updatedDoctorDto);
-        Task AddAdmissionConditionToDoctor(Guid doctorId, DoctorAdmissionConditions admissionCondition);
+        Task AddAdmissionConditionToDoctor(DoctorAdmissionConditions admissionCondition);
         Task DeleteAdmissionConditionForDoctor(Guid doctorId, Guid admissionConditionId);
         Task UpdateAdmissionConditionForDoctor(Guid doctorId, Guid admissionConditionId, DoctorAdmissionConditions updatedAdmissionCondition);
         Task<List<Doctor>> GetDoctorsByClinicId(Guid clinicId);

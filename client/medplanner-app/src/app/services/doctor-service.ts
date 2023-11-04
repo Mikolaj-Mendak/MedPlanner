@@ -42,5 +42,10 @@ export class DoctorService {
         const url = `${environment.apiUrl}/doctor/getAdmissionByClinicForDoctor/${clinicId}`;
         return this.http.get<DoctorAdmissionConditions>(url);
     }
+    addAdmissionCondition(admissionConditionDto: DoctorAdmissionConditions): Observable<void> {
+        console.log(admissionConditionDto)
+        const url = `${environment.apiUrl}/doctor/admission`;
+        return this.http.post<void>(url, admissionConditionDto);
+    }
 
 }

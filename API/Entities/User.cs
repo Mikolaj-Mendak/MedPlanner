@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using API.Enums;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace API.Entities
@@ -13,5 +14,6 @@ namespace API.Entities
         public string Pesel { get; set; }
         public byte[] PasswordHash { get; set; } 
         public byte[] PasswordSalt { get; set; }
+        public UserRoleEnum Role { get; set; }
     }
 }

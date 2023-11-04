@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { ActivatedRoute, Route, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { DoctorAdmissionConditions } from 'src/app/models/doctor-admission';
 import { DoctorService } from 'src/app/services/doctor-service';
@@ -23,22 +24,25 @@ export class SetDoctorAdmissionForClinicDialogComponent implements OnInit {
         { value: 6, label: 'Niedziela' }
     ];
     admissionForm: FormGroup;
+    clinicId: string;
 
     constructor(
         private doctorService: DoctorService,
         private route: ActivatedRoute,
         private dialog: MatDialog,
-        private fb: FormBuilder
-    ) { }
+        private fb: FormBuilder,
+        private router: Router,
+        private toastr: ToastrService,
+        private dialogRef: MatDialogRef<SetDoctorAdmissionForClinicDialogComponent>,
+    ) {
+
+        this.clinicId = this.getIdFromUrl(this.router.url);
+    }
 
     ngOnInit(): void {
-        this.route.paramMap.subscribe(params => {
-            const clinicId = params.get('clinicId');
-            this.loadDoctorAdmission(clinicId);
-        });
-
+        this.loadDoctorAdmission();
         this.admissionForm = this.fb.group({
-            clinicId: ['', Validators.required],
+            clinicId: [this.clinicId, Validators.required],
             doctorId: ['', Validators.required],
             specialization: [''],
             isNFZ: [false],
@@ -50,9 +54,9 @@ export class SetDoctorAdmissionForClinicDialogComponent implements OnInit {
         });
     }
 
-    private loadDoctorAdmission(clinicId: string): void {
-        if (clinicId) {
-            this.doctorAdmission$ = this.doctorService.getAdmissionByClinicForDoctor(clinicId.toString());
+    private loadDoctorAdmission(): void {
+        if (this.clinicId) {
+            this.doctorAdmission$ = this.doctorService.getAdmissionByClinicForDoctor(this.clinicId.toString());
         } else {
             console.error('Brak wymaganych parametrów w URL.');
         }
@@ -73,23 +77,50 @@ export class SetDoctorAdmissionForClinicDialogComponent implements OnInit {
         return days.join(', ');
     }
 
-    openDialog(): void {
-        const dialogRef = this.dialog.open(SetDoctorAdmissionForClinicDialogComponent, {
-            width: '400px',
-            height: '700px',
-            position: {
-                top: '220px'
-            }
-        });
+    onSubmit() {
+        const formData = this.admissionForm.value;
 
-        dialogRef.afterClosed().subscribe(result => {
-        });
+        const addDoctorAdmission: DoctorAdmissionConditions = {
+            clinicId: formData.clinicId,
+            doctorId: formData.doctorId,
+            specialization: formData.specialization,
+            isNFZ: formData.isNFZ,
+            isPrivate: formData.isPrivate,
+            consultationFee: formData.consultationFee,
+            workingDays: formData.workingDays,
+            workHoursStart: this.convertTimeStringToDate(formData.workHoursStart),
+            workHoursEnd: this.convertTimeStringToDate(formData.workHoursEnd)
+        };
+
+        this.doctorService.addAdmissionCondition(addDoctorAdmission).subscribe(
+            (user) => {
+                this.toastr.success('Dodano warunki pracy.', 'Sukces');
+                this.dialogRef.close();
+            },
+            (error) => {
+                this.toastr.error('Błąd dodawania warunków pracy');
+                this.dialogRef.close();
+            }
+        );
     }
 
-    onSubmit() {
-        if (this.admissionForm.valid) {
-            const formData = this.admissionForm.value;
-            console.log(formData);
+    private getIdFromUrl(url: string): string {
+        const segments = url.split('/');
+        const idSegment = segments[segments.length - 1];
+        return idSegment;
+    }
+
+    convertTimeStringToDate(timeString: string): Date | null {
+        if (timeString) {
+            const [hours, minutes] = timeString.split(':');
+            if (hours && minutes) {
+                const date = new Date();
+                date.setHours(Number(hours));
+                date.setMinutes(Number(minutes));
+                date.setSeconds(0);
+                return date;
+            }
         }
+        return null;
     }
 }

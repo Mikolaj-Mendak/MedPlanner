@@ -65,9 +65,9 @@ namespace API.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task AddAdmissionConditionToDoctor(Guid doctorId, DoctorAdmissionConditions admissionCondition)
+        public async Task AddAdmissionConditionToDoctor(DoctorAdmissionConditions admissionCondition)
         {
-            var doctor = await _context.Doctors.Include(d => d.AdmissionConditions).FirstOrDefaultAsync(d => d.Id == doctorId);
+            var doctor = await _context.Doctors.Include(d => d.AdmissionConditions).FirstOrDefaultAsync(d => d.Id == admissionCondition.DoctorId);
 
             if (doctor == null)
             {
@@ -152,7 +152,7 @@ namespace API.Services
 
         public async Task<List<Clinic>> GetClinicsForDoctor()
         {
-            var doctorId = "c560d7be-d9c6-4c5c-8188-bd4686c742c1";
+            var doctorId = _currentUserService.GetCurrentUserId();
 
             var clinicDoctorRelations = await _context.ClinicDoctors
                 .Where(x => x.DoctorId.ToString() == doctorId)

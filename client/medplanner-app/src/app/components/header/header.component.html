@@ -1,38 +1,57 @@
 <nav class="navbar navbar-dark sticky-top custom-bg-light-green flex-md-nowrap p-0">
-    <p>kalendarz wizyt</p>
+    <div class="current-time">
+        <div class="time" style="font-size: 42px; color: white;">{{ currentTime | date: 'HH:mm:ss' }}</div>
+        <div class="date" style="margin-left: 1.5em;">{{ currentTime | date: 'dd.MM.yyyy' }}</div>
+    </div>
     <img src="assets/medical-planning.png" class="custom-logo">
-    <div class="form-class">
+    <div class="form-class" *ngIf="getUserRole() == userRoleEnum.User.toString()">
         <form class="form-inline ">
             <div class="form-group mr-sm-2">
-                <select class="form-control inputs" id="miastoSelect">
+                <select class="form-control inputs" id="miastoSelect" [disabled]="!isLogged">
                     <option value="" disabled selected>Wybierz miasto</option>
-                    <option value="Miasto1">Miasto 1</option>
-                    <option value="Miasto2">Miasto 2</option>
-                    <option value="Miasto3">Miasto 3</option>
+                    <option value="Warszawa">Warszawa</option>
+                    <option value="Kraków">Kraków</option>
+                    <option value="Wrocław">Wrocław</option>
+                    <option value="Poznań">Poznań</option>
+                    <option value="Gdańsk">Gdańsk</option>
+                    <option value="Łódź">Łódź</option>
+                    <option value="Szczecin">Szczecin</option>
+                    <option value="Bydgoszcz">Bydgoszcz</option>
+                    <option value="Katowice">Katowice</option>
+                    <option value="Białystok">Białystok</option>
                 </select>
-                <select class="form-control inputs" id="miastoSelect">
-                    <option value="" disabled selected>Wybierz specjalizacje</option>
-                    <option value="Miasto1">Miasto 1</option>
-                    <option value="Miasto2">Miasto 2</option>
-                    <option value="Miasto3">Miasto 3</option>
+                <select class="form-control inputs" id="specjalizacjeSelect" [disabled]="!isLogged">
+                    <option value="" disabled selected>Wybierz specjalizację</option>
+                    <option value="Medycyna ogólna">Medycyna ogólna</option>
+                    <option value="Kardiologia">Kardiologia</option>
+                    <option value="Chirurgia">Chirurgia</option>
+                    <option value="Ginekologia">Ginekologia</option>
+                    <option value="Pediatria">Pediatria</option>
+                    <option value="Ortopedia">Ortopedia</option>
+                    <option value="Dermatologia">Dermatologia</option>
+                    <option value="Neurologia">Neurologia</option>
+                    <option value="Onkologia">Onkologia</option>
+                    <option value="Endokrynologia">Endokrynologia</option>
                 </select>
             </div>
             <div class="radio-options">
                 <div class="form-check mr-sm-2">
-                    <input class="form-check-input" type="radio" name="nfzPrivate" id="nfzRadio" value="nfz">
+                    <input class="form-check-input" type="radio" name="nfzPrivate" id="nfzRadio" value="nfz"
+                        [disabled]="!isLogged">
                     <label class="form-check-label" for="nfzRadio">
                         NFZ
                     </label>
                 </div>
                 <div class="form-check mr-sm-2">
-                    <input class="form-check-input" type="radio" name="nfzPrivate" id="privateRadio" value="private">
+                    <input class="form-check-input" type="radio" name="nfzPrivate" id="privateRadio" value="private"
+                        [disabled]="!isLogged">
                     <label class="form-check-label" for="privateRadio">
                         Prywatnie
                     </label>
                 </div>
             </div>
         </form>
-        <button type="submit" class="btn submit-btn">Szukaj</button>
+        <button *ngIf="isLogged" type="submit" class="btn submit-btn">Szukaj</button>
     </div>
     <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap align-items-center">

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth-service';
+import { UserRolesEnum } from 'src/app/enums/user-roles-enum';
 
 @Component({
     selector: 'app-header',
@@ -12,7 +13,8 @@ export class HeaderComponent implements OnInit {
 
     loginForm: FormGroup;
     isLogged: boolean;
-    currentUser: any; // Zmieniamy typ na 'any', aby pomieścić cały obiekt currentUser
+    currentUser: any;
+    currentTime: Date;
 
     constructor(private dialog: MatDialog,
         private formBuilder: FormBuilder,
@@ -26,6 +28,10 @@ export class HeaderComponent implements OnInit {
             this.currentUser = JSON.parse(currentUser);
             this.isLogged = true;
         }
+        this.updateCurrentTime();
+        setInterval(() => {
+            this.updateCurrentTime();
+        }, 1000);
     }
 
     setLoginForm(): void {
@@ -59,5 +65,18 @@ export class HeaderComponent implements OnInit {
 
     checkLoginValidator(controlName: string): boolean {
         return this.loginForm.get(controlName).invalid && this.loginForm.get(controlName).touched;
+    }
+
+    updateCurrentTime() {
+        this.currentTime = new Date();
+    }
+
+    userRoleEnum = UserRolesEnum;
+
+    getUserRole(): string {
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        if (currentUser && currentUser.role) {
+            return currentUser.role;
+        }
     }
 }

@@ -13,6 +13,7 @@ import { RegisterDto } from '../DTOs/register-dto';
 
 
 export class AuthService {
+
     private apiUrl = environment.apiUrl;
 
     private currentUserSubject: BehaviorSubject<User | null>;

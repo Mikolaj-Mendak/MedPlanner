@@ -1,4 +1,6 @@
-﻿namespace API.Entities
+﻿using API.Enums;
+
+namespace API.Entities
 {
     public class ClinicOwner : User
     {

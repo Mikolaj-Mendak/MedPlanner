@@ -7,15 +7,18 @@ import { DoctorAdmissionPageComponent } from './components/doctor-admission-page
 import { UserProfilePageComponent } from './components/user-profile-page/user-profile-page.component';
 import { DoctorClinicPageComponent } from './components/doctor-clinic-page/doctor-clinic-page.component';
 import { DoctorAdmissionPageForDoctorComponent } from './components/doctor-admission-page-for-doctor/doctor-admission-page-for-doctor.component';
+import { ClinicOwnerGuard } from './guards/clinic-owner-avtivate-guard';
+import { DoctorGuard } from './guards/doctor-activate-guard';
+import { DoctorOrClinicOwnerGuard } from './guards/doctor-clinic-owner-guard';
 
 const routes: Routes = [
-    { path: 'ownerClinics', component: OwnerClinicsComponent },
+    { path: 'ownerClinics', component: OwnerClinicsComponent, canActivate: [ClinicOwnerGuard] },
     { path: '', component: RegisterPageComponent },
-    { path: 'ownerClinics/:id', component: ClinicDetailsComponent },
-    { path: 'doctorAdmission/:clinicId/:doctorId', component: DoctorAdmissionPageComponent },
+    { path: 'ownerClinics/:id', component: ClinicDetailsComponent, canActivate: [ClinicOwnerGuard] },
+    { path: 'doctorAdmission/:clinicId/:doctorId', component: DoctorAdmissionPageComponent, canActivate: [DoctorOrClinicOwnerGuard] },
     { path: 'myProfile', component: UserProfilePageComponent },
-    { path: 'doctor/clinics', component: DoctorClinicPageComponent },
-    { path: 'doctor/clinics/admission/:clinicId', component: DoctorAdmissionPageForDoctorComponent }
+    { path: 'doctor/clinics', component: DoctorClinicPageComponent, canActivate: [DoctorGuard] },
+    { path: 'doctor/clinics/admission/:clinicId', component: DoctorAdmissionPageForDoctorComponent, canActivate: [DoctorGuard] }
 ];
 
 @NgModule({
