@@ -1,0 +1,6 @@
+
+*.vsidx
+*.vsidx
+API/obj/Debug/net7.0/API.dll
+*.dll
+*.pdb

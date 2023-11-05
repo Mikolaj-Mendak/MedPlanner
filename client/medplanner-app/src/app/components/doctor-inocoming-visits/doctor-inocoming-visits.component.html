@@ -1,0 +1,41 @@
+<div class="table-wrapper">
+    <h1 class="page-header">Nadchodzące wizyty</h1>
+    <hr />
+    <div class="button-container">
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Imie i Nazwisko</th>
+                <th>Pesel</th>
+                <th>Koszt</th>
+                <th>Data</th>
+                <th style="width: 100px;"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let visit of (visits$ | async)">
+                <td>{{ visit.patient.firstName }} {{visit.patient.lastName}}</td>
+                <td>{{ visit.patient.pesel }}</td>
+                <td>{{ visit.fee }}</td>
+                <td>{{ formatDateTime(visit.visitDate) }}</td>
+                <td>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item>
+                            <mat-icon>dialpad</mat-icon>
+                            <span>Redial</span>
+                        </button>
+                        <button mat-menu-item disabled>
+                            <mat-icon>voicemail</mat-icon>
+                            <span>Check voice mail</span>
+                        </button>
+                        <button mat-menu-item>
+                            <mat-icon>notifications_off</mat-icon>
+                            <span>Disable alerts</span>
+                        </button>
+                    </mat-menu>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

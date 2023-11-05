@@ -3,6 +3,7 @@ using System;
 using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20231105155832_ExtendVisitModel")]
+    partial class ExtendVisitModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -196,8 +199,8 @@ namespace API.Migrations
                     b.Property<Guid>("ClinicId")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("text");
+                    b.Property<Guid>("DoctorAdmissionId")
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("DoctorId")
                         .HasColumnType("uuid");
@@ -211,15 +214,14 @@ namespace API.Migrations
                     b.Property<Guid>("PatientId")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Reccomendations")
-                        .HasColumnType("text");
-
                     b.Property<DateTime>("VisitDate")
                         .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ClinicId");
+
+                    b.HasIndex("DoctorAdmissionId");
 
                     b.HasIndex("DoctorId");
 
@@ -304,6 +306,12 @@ namespace API.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("API.Entities.DoctorAdmissionConditions", "DoctorAdmission")
+                        .WithMany()
+                        .HasForeignKey("DoctorAdmissionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("API.Entities.Doctor", "Doctor")
                         .WithMany()
                         .HasForeignKey("DoctorId")
@@ -319,6 +327,8 @@ namespace API.Migrations
                     b.Navigation("Clinic");
 
                     b.Navigation("Doctor");
+
+                    b.Navigation("DoctorAdmission");
 
                     b.Navigation("Patient");
                 });

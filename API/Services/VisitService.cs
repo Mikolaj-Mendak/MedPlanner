@@ -10,16 +10,34 @@ namespace API.Services
     public class VisitService : IVisitService
     {
         private readonly DataContext _context;
-        public VisitService(DataContext context)
+        private readonly IUserProviderService _userProviderService;
+        private readonly IUsersService _userService;
+        private readonly IDoctorService _doctorService;
+        public VisitService(DataContext context, IUserProviderService userProviderService, IUsersService userService, IDoctorService doctorService)
         {
             _context = context;
+            _userProviderService = userProviderService;
+            _doctorService = doctorService;
+            _userService = userService;
+            _doctorService = doctorService;
         }
 
         //COMMON VISITS
         public async Task<Visit> GetVisit(Guid visitId)
         {
-            return await _context.Visits.FindAsync(visitId);
+            var doctorId = _userProviderService.GetCurrentUserId();
+            var visit = await _context.Visits.SingleOrDefaultAsync(x => x.Id == visitId);
+
+            if (visit != null)
+            {
+                visit.Clinic = _context.Clinics.FirstOrDefault(x => x.Id == visit.ClinicId);
+                visit.Patient = await _userService.GetUserByIdAsync(visit.PatientId);
+                visit.Doctor = await _doctorService.GetDoctor(visit.DoctorId);
+            }
+
+            return visit;
         }
+
 
         public async Task<List<Visit>> GetAllActiveVisits()
         {
@@ -68,13 +86,20 @@ namespace API.Services
 
         public async Task AddVisitByUser(CreateVisitDto visitDto)
         {
+            var patient = await _userService.GetUserByIdAsync(visitDto.PatientId);
+            var doctor = await _doctorService.GetDoctor(visitDto.DoctorId);
+            var doctorAdmission = await _doctorService.GetAdmissionByClinicAndDoctor(visitDto.DoctorId, visitDto.ClinicId);
+
             var newVisit = new Visit
             {
                 PatientId = visitDto.PatientId,
                 VisitDate = visitDto.VisitDate,
                 DoctorId = visitDto.DoctorId,
                 IsActive = true,
-                Fee = visitDto.Fee
+                Fee = doctorAdmission.ConsultationFee,
+                Patient = patient,
+                Doctor = doctor,
+                ClinicId = visitDto.ClinicId,
             };
 
             _context.Visits.Add(newVisit);
@@ -91,24 +116,40 @@ namespace API.Services
         }
 
         //DOCTOR VISITS
-        public async Task<List<Visit>> GetDoctorIncomingVisits(Guid doctorId)
+        public async Task<List<Visit>> GetDoctorIncomingVisits()
         {
+            var doctorId = _userProviderService.GetCurrentUserId();
             var visits = await _context.Visits
-               .Where(visit => visit.VisitDate > DateTime.Now && visit.DoctorId == doctorId && visit.IsActive)
-               .ToListAsync();
+                .Where(visit => visit.VisitDate > DateTime.Now && visit.DoctorId.ToString() == doctorId )
+                .ToListAsync();
 
-            return visits;
-
-        }
-
-        public async Task<List<Visit>> GetDoctorPreviousVisits(Guid doctorId)
-        {
-            var visits = await _context.Visits
-               .Where(visit => visit.VisitDate <= DateTime.Now && visit.DoctorId == doctorId && visit.IsActive)
-               .ToListAsync();
+            foreach (var visit in visits)
+            {
+                visit.Clinic =  _context.Clinics.FirstOrDefault(x => x.Id == visit.ClinicId);
+                visit.Patient = await _userService.GetUserByIdAsync(visit.PatientId);
+                visit.Doctor = await _doctorService.GetDoctor(visit.DoctorId);
+            }
 
             return visits;
         }
+
+        public async Task<List<Visit>> GetDoctorPreviousVisits()
+        {
+            var doctorId = _userProviderService.GetCurrentUserId();
+            var visits = await _context.Visits
+                .Where(visit => visit.VisitDate <= DateTime.Now && visit.DoctorId.ToString() == doctorId )
+                .ToListAsync();
+
+            foreach (var visit in visits)
+            {
+                visit.Clinic =  _context.Clinics.FirstOrDefault(x => x.Id == visit.ClinicId);
+                visit.Patient = await _userService.GetUserByIdAsync(visit.PatientId);
+                visit.Doctor = await _doctorService.GetDoctor(visit.DoctorId);
+            }
+
+            return visits;
+        }
+
 
     }
 }

@@ -10,6 +10,9 @@ import { DoctorAdmissionPageForDoctorComponent } from './components/doctor-admis
 import { ClinicOwnerGuard } from './guards/clinic-owner-avtivate-guard';
 import { DoctorGuard } from './guards/doctor-activate-guard';
 import { DoctorOrClinicOwnerGuard } from './guards/doctor-clinic-owner-guard';
+import { DoctorInocomingVisitsComponent } from './components/doctor-inocoming-visits/doctor-inocoming-visits.component';
+import { DoctorHistoryVisitsComponent } from './components/doctor-history-visits/doctor-history-visits.component';
+import { VisitDoctorDetailsComponent } from './components/visit-doctor-details/visit-doctor-details.component';
 
 const routes: Routes = [
     { path: 'ownerClinics', component: OwnerClinicsComponent, canActivate: [ClinicOwnerGuard] },
@@ -18,7 +21,11 @@ const routes: Routes = [
     { path: 'doctorAdmission/:clinicId/:doctorId', component: DoctorAdmissionPageComponent, canActivate: [DoctorOrClinicOwnerGuard] },
     { path: 'myProfile', component: UserProfilePageComponent },
     { path: 'doctor/clinics', component: DoctorClinicPageComponent, canActivate: [DoctorGuard] },
-    { path: 'doctor/clinics/admission/:clinicId', component: DoctorAdmissionPageForDoctorComponent, canActivate: [DoctorGuard] }
+    { path: 'doctor/clinics/admission/:clinicId', component: DoctorAdmissionPageForDoctorComponent, canActivate: [DoctorGuard] },
+    { path: 'doctor/incomingVisits', component: DoctorInocomingVisitsComponent, canActivate: [DoctorGuard] },
+    { path: 'doctor/historyVisit', component: DoctorHistoryVisitsComponent, canActivate: [DoctorGuard] },
+    { path: 'doctor/historyVisit/:id', component: VisitDoctorDetailsComponent, canActivate: [DoctorGuard] },
+    { path: 'doctor/incomingVisit/:id', component: VisitDoctorDetailsComponent, canActivate: [DoctorGuard] }
 ];
 
 @NgModule({

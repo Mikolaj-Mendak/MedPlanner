@@ -91,19 +91,19 @@ namespace API.Controllers
             return Ok(visits);
         }
 
-        // GET api/visits/doctor/{doctorId}/incoming
-        [HttpGet("doctor/{doctorId}/incoming")]
-        public async Task<ActionResult<List<Visit>>> GetDoctorIncomingVisits(Guid doctorId)
+
+        [HttpGet("doctor/incoming")]
+        public async Task<ActionResult<List<Visit>>> GetDoctorIncomingVisits()
         {
-            var visits = await _visitService.GetDoctorIncomingVisits(doctorId);
+            var visits = await _visitService.GetDoctorIncomingVisits();
             return Ok(visits);
         }
 
         // GET api/visits/doctor/{doctorId}/previous
-        [HttpGet("doctor/{doctorId}/previous")]
-        public async Task<ActionResult<List<Visit>>> GetDoctorPreviousVisits(Guid doctorId)
+        [HttpGet("doctor/history")]
+        public async Task<ActionResult<List<Visit>>> GetDoctorPreviousVisits()
         {
-            var visits = await _visitService.GetDoctorPreviousVisits(doctorId);
+            var visits = await _visitService.GetDoctorPreviousVisits();
             return Ok(visits);
         }
     }

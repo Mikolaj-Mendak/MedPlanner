@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environment';
 import { DoctorAdmissionConditions } from '../models/doctor-admission';
 import { Clinic } from '../models/clinic';
+import { Visit } from '../models/visit';
 
 @Injectable({
     providedIn: 'root'
@@ -42,10 +43,31 @@ export class DoctorService {
         const url = `${environment.apiUrl}/doctor/getAdmissionByClinicForDoctor/${clinicId}`;
         return this.http.get<DoctorAdmissionConditions>(url);
     }
+
     addAdmissionCondition(admissionConditionDto: DoctorAdmissionConditions): Observable<void> {
-        console.log(admissionConditionDto)
         const url = `${environment.apiUrl}/doctor/admission`;
         return this.http.post<void>(url, admissionConditionDto);
     }
+
+    getIncominVisits(): Observable<Visit[]> {
+        const url = `${environment.apiUrl}/visit/doctor/incoming`;
+        return this.http.get<Visit[]>(url);
+    }
+
+    getHistoryVisits(): Observable<Visit[]> {
+        const url = `${environment.apiUrl}/visit/doctor/history`;
+        return this.http.get<Visit[]>(url);
+    }
+
+    setInactiveVisit(visitId: string): Observable<void> {
+        const url = `${environment.apiUrl}/visit/cancel/${visitId}`;
+        return this.http.put<void>(url, null);
+    }
+
+    getVisitForDoctor(visitId: string): Observable<Visit> {
+        const url = `${environment.apiUrl}/visit/${visitId}`;
+        return this.http.get<Visit>(url);
+    }
+
 
 }

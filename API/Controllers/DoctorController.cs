@@ -5,8 +5,6 @@ using API.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json.Serialization;
 using System.Text.Json;
-using Microsoft.AspNetCore.Authorization;
-using System.Data;
 
 namespace API.Controllers
 {

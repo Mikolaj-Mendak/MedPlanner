@@ -29,6 +29,9 @@ import { UserProfilePageComponent } from './components/user-profile-page/user-pr
 import { DoctorClinicPageComponent } from './components/doctor-clinic-page/doctor-clinic-page.component';
 import { DoctorAdmissionPageForDoctorComponent } from './components/doctor-admission-page-for-doctor/doctor-admission-page-for-doctor.component';
 import { SetDoctorAdmissionForClinicDialogComponent } from './components/set-doctor-admission-for-clinic-dialog/set-doctor-admission-for-clinic-dialog.component';
+import { DoctorInocomingVisitsComponent } from './components/doctor-inocoming-visits/doctor-inocoming-visits.component';
+import { DoctorHistoryVisitsComponent } from './components/doctor-history-visits/doctor-history-visits.component';
+import { VisitDoctorDetailsComponent } from './components/visit-doctor-details/visit-doctor-details.component';
 
 
 @NgModule({
@@ -48,7 +51,10 @@ import { SetDoctorAdmissionForClinicDialogComponent } from './components/set-doc
         UserProfilePageComponent,
         DoctorClinicPageComponent,
         DoctorAdmissionPageForDoctorComponent,
-        SetDoctorAdmissionForClinicDialogComponent
+        SetDoctorAdmissionForClinicDialogComponent,
+        DoctorInocomingVisitsComponent,
+        DoctorHistoryVisitsComponent,
+        VisitDoctorDetailsComponent
     ],
     imports: [
         BrowserModule,
