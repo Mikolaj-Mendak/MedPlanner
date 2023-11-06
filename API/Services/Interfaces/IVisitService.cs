@@ -12,7 +12,7 @@ namespace API.Services.Interfaces
         Task<List<Visit>> GetUserIncomingVisits(Guid patientId);
         Task<List<Visit>> GetUserPreviousVisits(Guid patientId);
         Task<List<Visit>> GetDoctorIncomingVisits();
-        Task<List<Visit>> GetDoctorPreviousVisits();
+        Task<List<Visit>> GetDoctorPreviousVisits(int page, int pageSize, string firstName, string lastName, string pesel);
         Task AddVisitByUser(CreateVisitDto visitDto);
         Task CancelVisit(Guid visitId);
         Task<List<Visit>> GetPreviousActiveVisits();

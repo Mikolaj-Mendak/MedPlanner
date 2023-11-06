@@ -99,12 +99,13 @@ namespace API.Controllers
             return Ok(visits);
         }
 
-        // GET api/visits/doctor/{doctorId}/previous
         [HttpGet("doctor/history")]
-        public async Task<ActionResult<List<Visit>>> GetDoctorPreviousVisits()
+        public async Task<ActionResult<List<Visit>>> GetDoctorPreviousVisits(int page = 1, int pageSize = 10, string firstName = null, string lastName = null, string pesel = null)
         {
-            var visits = await _visitService.GetDoctorPreviousVisits();
+            var visits = await _visitService.GetDoctorPreviousVisits(page, pageSize, firstName, lastName, pesel);
+
             return Ok(visits);
         }
+
     }
 }

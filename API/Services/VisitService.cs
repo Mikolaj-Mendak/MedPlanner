@@ -133,22 +133,42 @@ namespace API.Services
             return visits;
         }
 
-        public async Task<List<Visit>> GetDoctorPreviousVisits()
+        public async Task<List<Visit>> GetDoctorPreviousVisits(int page, int pageSize, string firstName = null, string lastName = null, string pesel = null)
         {
             var doctorId = _userProviderService.GetCurrentUserId();
-            var visits = await _context.Visits
-                .Where(visit => visit.VisitDate <= DateTime.Now && visit.DoctorId.ToString() == doctorId )
+            var query = _context.Visits
+                .Where(visit => visit.VisitDate <= DateTime.Now && visit.DoctorId.ToString() == doctorId);
+
+            if (!string.IsNullOrEmpty(firstName))
+            {
+                query = query.Where(visit => visit.Patient.FirstName.Contains(firstName));
+            }
+
+            if (!string.IsNullOrEmpty(lastName))
+            {
+                query = query.Where(visit => visit.Patient.LastName.Contains(lastName));
+            }
+
+            if (!string.IsNullOrEmpty(pesel))
+            {
+                query = query.Where(visit => visit.Patient.Pesel.Contains(pesel));
+            }
+
+            var visits = await query
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
                 .ToListAsync();
 
             foreach (var visit in visits)
             {
-                visit.Clinic =  _context.Clinics.FirstOrDefault(x => x.Id == visit.ClinicId);
+                visit.Clinic = _context.Clinics.FirstOrDefault(x => x.Id == visit.ClinicId);
                 visit.Patient = await _userService.GetUserByIdAsync(visit.PatientId);
                 visit.Doctor = await _doctorService.GetDoctor(visit.DoctorId);
             }
 
             return visits;
         }
+
 
 
     }

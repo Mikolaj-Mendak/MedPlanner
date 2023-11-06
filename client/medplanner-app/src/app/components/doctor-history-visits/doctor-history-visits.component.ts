@@ -12,13 +12,19 @@ import { DoctorService } from 'src/app/services/doctor-service';
 export class DoctorHistoryVisitsComponent {
 
     visits$: Observable<Visit[]>;
+    currentPage = 1;
+    pageSize = 10;
+    firstNameFilter = '';
+    lastNameFilter = '';
+    peselFilter = '';
+
 
     constructor(private doctorService: DoctorService, private router: Router) {
 
     }
 
     ngOnInit(): void {
-        this.visits$ = this.doctorService.getHistoryVisits();
+        this.loadVisits();
     }
 
     formatDateTime(dateTimeString: string): string {
@@ -38,6 +44,21 @@ export class DoctorHistoryVisitsComponent {
         }, error => {
             console.error('Błąd anulowania wizyty:', error);
         });
+    }
+
+    loadVisits() {
+        this.visits$ = this.doctorService.getHistoryVisits(
+            this.currentPage,
+            this.pageSize,
+            this.firstNameFilter,
+            this.lastNameFilter,
+            this.peselFilter
+        );
+    }
+
+    onPageChange(newPage: number) {
+        this.currentPage = newPage;
+        this.loadVisits();
     }
 
 

@@ -1,7 +1,21 @@
 <div class="table-wrapper">
     <h1 class="page-header">Historia wizyt</h1>
     <hr />
-    <div class="button-container">
+    <div class="filter-container">
+        <input [(ngModel)]="firstNameFilter" placeholder="Imię">
+        <input [(ngModel)]="lastNameFilter" placeholder="Nazwisko">
+        <input [(ngModel)]="peselFilter" placeholder="PESEL">
+        <button class="search-button" (click)="loadVisits()">Szukaj</button>
+    </div>
+    <div class="pagination">
+        <div class="button-container">
+            <button class="custom-button" (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1">
+                <mat-icon>keyboard_arrow_left</mat-icon>
+            </button>
+            <button class="custom-button" (click)="onPageChange(currentPage + 1)">
+                <mat-icon>keyboard_arrow_right</mat-icon>
+            </button>
+        </div>
     </div>
     <table>
         <thead>

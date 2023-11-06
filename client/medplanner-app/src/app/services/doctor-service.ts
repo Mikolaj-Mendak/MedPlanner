@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Doctor } from '../models/doctor';
 import { Observable } from 'rxjs';
@@ -54,9 +54,32 @@ export class DoctorService {
         return this.http.get<Visit[]>(url);
     }
 
-    getHistoryVisits(): Observable<Visit[]> {
+    getHistoryVisits(
+        page: number = 1,
+        pageSize: number = 10,
+        firstName: string = null,
+        lastName: string = null,
+        pesel: string = null
+    ): Observable<Visit[]> {
         const url = `${environment.apiUrl}/visit/doctor/history`;
-        return this.http.get<Visit[]>(url);
+
+        let params = new HttpParams()
+            .set('page', page.toString())
+            .set('pageSize', pageSize.toString());
+
+        if (firstName) {
+            params = params.set('firstName', firstName);
+        }
+
+        if (lastName) {
+            params = params.set('lastName', lastName);
+        }
+
+        if (pesel) {
+            params = params.set('pesel', pesel);
+        }
+
+        return this.http.get<Visit[]>(url, { params });
     }
 
     setInactiveVisit(visitId: string): Observable<void> {
