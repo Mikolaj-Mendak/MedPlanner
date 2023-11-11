@@ -59,7 +59,8 @@ export class DoctorService {
         pageSize: number = 10,
         firstName: string = null,
         lastName: string = null,
-        pesel: string = null
+        pesel: string = null,
+        sortBy: string = null
     ): Observable<Visit[]> {
         const url = `${environment.apiUrl}/visit/doctor/history`;
 
@@ -77,6 +78,11 @@ export class DoctorService {
 
         if (pesel) {
             params = params.set('pesel', pesel);
+        }
+
+
+        if (sortBy) {
+            params = params.set('sortBy', sortBy);
         }
 
         return this.http.get<Visit[]>(url, { params });

@@ -47,6 +47,47 @@
         width: 1400px;
     }
 
+    
+  .filter-container{
+    align-items: center;
+    display: flex;
+    .custom-input{
+        border-radius: 10px;
+        height: 40px;
+        margin-right: 1em;
+    }
+
+    button {
+        display: flex;
+        align-items: center;
+    }
+    
+
+    .search-button{
+        background-color: #0ff8d1;
+        border: none;
+        color: white;
+        align-items: center;
+        border-radius: 10px;
+    }
+
+    .filter-inputs {
+        display: flex;
+        margin-right: 10px; 
+    }
+
+  }
+
+}
+
+.sort-container {
+    margin-right: 1em;
+    select {
+        word-wrap: normal;
+        height: 40px;
+        width: 100px;
+        border-radius: 10px;
+    }
 }
 
 table {
@@ -139,6 +180,7 @@ table {
     background-color: rgb(233, 112, 112);
     color: white;
   }
+
 
 
 

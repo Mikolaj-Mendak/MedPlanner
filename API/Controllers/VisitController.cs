@@ -100,9 +100,9 @@ namespace API.Controllers
         }
 
         [HttpGet("doctor/history")]
-        public async Task<ActionResult<List<Visit>>> GetDoctorPreviousVisits(int page = 1, int pageSize = 10, string firstName = null, string lastName = null, string pesel = null)
+        public async Task<ActionResult<List<Visit>>> GetDoctorPreviousVisits(int page = 1, int pageSize = 10, string firstName = null, string lastName = null, string pesel = null, string sortBy = null)
         {
-            var visits = await _visitService.GetDoctorPreviousVisits(page, pageSize, firstName, lastName, pesel);
+            var visits = await _visitService.GetDoctorPreviousVisits(page, pageSize, firstName, lastName, pesel, sortBy);
 
             return Ok(visits);
         }

@@ -132,8 +132,7 @@ namespace API.Services
 
             return visits;
         }
-
-        public async Task<List<Visit>> GetDoctorPreviousVisits(int page, int pageSize, string firstName = null, string lastName = null, string pesel = null)
+        public async Task<List<Visit>> GetDoctorPreviousVisits(int page, int pageSize, string firstName = null, string lastName = null, string pesel = null, string sortBy = null)
         {
             var doctorId = _userProviderService.GetCurrentUserId();
             var query = _context.Visits
@@ -154,6 +153,20 @@ namespace API.Services
                 query = query.Where(visit => visit.Patient.Pesel.Contains(pesel));
             }
 
+            if (!string.IsNullOrEmpty(sortBy))
+            {
+
+                switch (sortBy.ToLower())
+                {
+                    case "date":
+                        query = query.OrderBy(visit => visit.VisitDate);
+                        break;
+                    case "price":
+                        query = query.OrderBy(visit => visit.Fee);
+                        break;
+                }
+            }
+
             var visits = await query
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
@@ -168,6 +181,7 @@ namespace API.Services
 
             return visits;
         }
+
 
 
 

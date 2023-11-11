@@ -17,6 +17,7 @@ export class DoctorHistoryVisitsComponent {
     firstNameFilter = '';
     lastNameFilter = '';
     peselFilter = '';
+    sortOption = '';
 
 
     constructor(private doctorService: DoctorService, private router: Router) {
@@ -52,7 +53,8 @@ export class DoctorHistoryVisitsComponent {
             this.pageSize,
             this.firstNameFilter,
             this.lastNameFilter,
-            this.peselFilter
+            this.peselFilter,
+            this.sortOption
         );
     }
 
