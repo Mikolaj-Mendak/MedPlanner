@@ -93,9 +93,9 @@ namespace API.Controllers
 
 
         [HttpGet("doctor/incoming")]
-        public async Task<ActionResult<List<Visit>>> GetDoctorIncomingVisits()
+        public async Task<ActionResult<List<Visit>>> GetDoctorIncomingVisits(int page = 1, int pageSize = 10, string firstName = null, string lastName = null, string pesel = null, string sortBy = null)
         {
-            var visits = await _visitService.GetDoctorIncomingVisits();
+            var visits = await _visitService.GetDoctorIncomingVisits(page, pageSize, firstName, lastName, pesel, sortBy);
             return Ok(visits);
         }
 

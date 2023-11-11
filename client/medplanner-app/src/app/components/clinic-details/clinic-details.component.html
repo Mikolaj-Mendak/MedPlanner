@@ -56,6 +56,27 @@
 <div class="table-wrapper">
     <h1 class="page-header">Lekarze</h1>
     <hr />
+    <div class="filter-container">
+        <div class="filter-inputs">
+            <input class="custom-input" [(ngModel)]="firstName" placeholder="Imie">
+            <input class="custom-input" [(ngModel)]="lastName" placeholder="Nazwisko">
+            <input class="custom-input" [(ngModel)]="pesel" placeholder="PESEL">
+            <input class="custom-input" [(ngModel)]="doctorNumber" placeholder="Numer Lekarski">
+        </div>
+        <button class="search-button" (click)="getDoctors()">
+            <i class="material-icons">search</i>
+        </button>
+    </div>
+    <div class="pagination">
+        <div class="button-container">
+            <button class="custom-button" (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1">
+                <mat-icon>keyboard_arrow_left</mat-icon>
+            </button>
+            <button class="custom-button" (click)="onPageChange(currentPage + 1)">
+                <mat-icon>keyboard_arrow_right</mat-icon>
+            </button>
+        </div>
+    </div>
     <div class="button-container">
         <button type="submit" class="btn custom-button" (click)="openAddDoctor()">
             Dodaj lekarza
@@ -65,14 +86,18 @@
         <thead>
             <tr>
                 <th>Imie i Nazwisko</th>
+                <th>Numer</th>
                 <th>Email</th>
+                <th>Pesel</th>
                 <th style="width: 100px;"></th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let doctor of doctors$ | async">
                 <td>{{ doctor.firstName }} {{doctor.lastName}}</td>
+                <td>{{ doctor.doctorNumber }}</td>
                 <td>{{ doctor.email }}</td>
+                <td>{{ doctor.pesel }}</td>
                 <td>
                     <button style="background-color: transparent; border: none; color: red;" mat-icon-button
                         (click)="deleteDoctor(doctor)">

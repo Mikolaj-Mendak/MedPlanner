@@ -11,7 +11,7 @@ namespace API.Services.Interfaces
         Task<List<Visit>> GetIncomingActiveVisits();
         Task<List<Visit>> GetUserIncomingVisits(Guid patientId);
         Task<List<Visit>> GetUserPreviousVisits(Guid patientId);
-        Task<List<Visit>> GetDoctorIncomingVisits();
+        Task<List<Visit>> GetDoctorIncomingVisits(int page, int pageSize, string firstName = null, string lastName = null, string pesel = null, string sortBy = null);
         Task<List<Visit>> GetDoctorPreviousVisits(int page, int pageSize, string firstName = null, string lastName = null, string pesel = null, string sortBy = null);
         Task AddVisitByUser(CreateVisitDto visitDto);
         Task CancelVisit(Guid visitId);

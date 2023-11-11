@@ -20,6 +20,12 @@ export class ClinicDetailsComponent implements OnInit {
 
     clinic$: Observable<Clinic>;
     doctors$: Observable<Doctor[]>;
+    currentPage = 1;
+    pageSize = 10;
+    firstName: string = '';
+    lastName: string = '';
+    pesel: string = '';
+    doctorNumber: string = '';
 
     constructor(
         private route: ActivatedRoute,
@@ -71,6 +77,7 @@ export class ClinicDetailsComponent implements OnInit {
     getDoctors(): void {
         this.route.paramMap.subscribe(params => {
             const clinicId = params.get('id');
+
             if (clinicId) {
                 this.clinic$ = this.clinicOwnerService.getSingleClinic(clinicId).pipe(
                     map(clinic => {
@@ -80,9 +87,15 @@ export class ClinicDetailsComponent implements OnInit {
                     })
                 );
             }
-            this.doctors$ = this.doctorService.getDoctorsForClinic(clinicId);
+
+            this.doctors$ = this.doctorService.getDoctorsForClinic(clinicId,
+                this.currentPage,
+                this.pageSize, this.firstName,
+                this.lastName, this.doctorNumber,
+                this.pesel);
         });
     }
+
 
     deleteDoctor(doctor: Doctor): void {
         const clinicId = this.getClinicIdFromUrl(this.router.url);
@@ -107,5 +120,10 @@ export class ClinicDetailsComponent implements OnInit {
         const segments = url.split('/');
         const lastSegment = segments[segments.length - 1];
         return lastSegment ? lastSegment : null;
+    }
+
+    onPageChange(newPage: number) {
+        this.currentPage = newPage;
+        this.getDoctors();
     }
 }

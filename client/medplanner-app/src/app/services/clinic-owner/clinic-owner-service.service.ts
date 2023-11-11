@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AddClinicDto } from 'src/app/DTOs/add-clinic-dto';
@@ -12,9 +12,27 @@ export class ClinicOwnerServiceService {
 
     constructor(private http: HttpClient) { }
 
-    getAllClinics(): Observable<Clinic[]> {
+    getAllClinics(
+        page: number = 1,
+        pageSize: number = 10,
+        address: string = null,
+        name: string = null
+    ): Observable<Clinic[]> {
+
+        let params = new HttpParams()
+            .set('page', page.toString())
+            .set('pageSize', pageSize.toString());
+
+        if (name) {
+            params = params.set('name', name);
+        }
+
+        if (address) {
+            params = params.set('address', address);
+        }
+
         const url = `${environment.apiUrl}/clinicowner/clinics`;
-        return this.http.get<Clinic[]>(url);
+        return this.http.get<Clinic[]>(url, { params });
     }
 
     addClinic(addClinicDto: AddClinicDto): Observable<Clinic> {

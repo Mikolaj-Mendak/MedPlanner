@@ -14,7 +14,7 @@ namespace API.Services.Interfaces
         Task<Clinic> UpdateClinicAsync(Guid clinicId, AddClinicDto clinicDto);
         Task RemoveDoctorFromClinicAsync(Guid clinicId, Guid doctorId);
         Task AddDoctorToClinicAsync(Guid clinicId, Guid doctorId);
-        Task<List<Clinic>> GetAllClinics();
+        Task<List<Clinic>> GetAllClinics(int page = 1, int pageSize = 10, string name = null, string address = null);
         Task<Clinic> GetClinicById(Guid clinicId);
         Task AddDoctorToClinicByNumber(Guid clinicId, string doctorNumber);
 

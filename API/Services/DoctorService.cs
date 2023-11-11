@@ -4,6 +4,7 @@ using API.Entities;
 using API.Migrations;
 using API.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace API.Services
 {
@@ -129,13 +130,50 @@ namespace API.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<Doctor>> GetDoctorsByClinicId(Guid clinicId)
+        public async Task<List<Doctor>> GetDoctorsByClinicId(
+            Guid clinicId,
+            int page = 1,
+            int pageSize = 10,
+            string firstName = null,
+            string lastName = null,
+            string pesel = null,
+            string doctorNumber = null
+        )
         {
-            return await _context.ClinicDoctors
-                .Where(cd => cd.ClinicId == clinicId)
+            var query = _context.ClinicDoctors
+                .Include(cd => cd.Doctor)
+                .Where(cd => cd.ClinicId == clinicId);
+
+            if (!string.IsNullOrEmpty(firstName))
+            {
+                query = query.Where(cd => cd.Doctor.FirstName.Contains(firstName));
+            }
+
+            if (!string.IsNullOrEmpty(lastName))
+            {
+                query = query.Where(cd => cd.Doctor.LastName.Contains(lastName));
+            }
+
+            if (!string.IsNullOrEmpty(pesel))
+            {
+                query = query.Where(cd => cd.Doctor.Pesel.Contains(pesel));
+            }
+
+            if (!string.IsNullOrEmpty(doctorNumber))
+            {
+                query = query.Where(cd => cd.Doctor.DoctorNumber.Contains(doctorNumber));
+            }
+
+
+            var doctors = await query
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
                 .Select(cd => cd.Doctor)
                 .ToListAsync();
+
+            return doctors;
         }
+
 
         public async Task<DoctorAdmissionConditions> GetAdmissionByClinicAndDoctor(Guid doctorId, Guid clinicId)
         {
@@ -150,25 +188,38 @@ namespace API.Services
             return x;
         }
 
-        public async Task<List<Clinic>> GetClinicsForDoctor()
+        public async Task<List<Clinic>> GetClinicsForDoctor(int page = 1, int pageSize = 10, string name = null, string address = null)
         {
             var doctorId = _currentUserService.GetCurrentUserId();
 
-            var clinicDoctorRelations = await _context.ClinicDoctors
-                .Where(x => x.DoctorId.ToString() == doctorId)
+            var clinicDoctorRelationsQuery = _context.ClinicDoctors
+                .Where(x => x.DoctorId.ToString() == doctorId);
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                clinicDoctorRelationsQuery = clinicDoctorRelationsQuery
+                    .Where(x => x.Clinic.Name.Contains(name));
+            }
+
+            if (!string.IsNullOrEmpty(address))
+            {
+                clinicDoctorRelationsQuery = clinicDoctorRelationsQuery
+                    .Where(x => x.Clinic.Address.Contains(address));
+            }
+
+            var clinicIds = await clinicDoctorRelationsQuery
+                .Select(x => x.ClinicId)
                 .ToListAsync();
 
-            List<Guid?> clinicIds = clinicDoctorRelations.Select(x => x?.ClinicId).ToList();
-            List<Clinic> clinics = new List<Clinic>();
-
-            foreach (var clinicId in clinicIds)
-            {
-                var clinic = _context.Clinics.FirstOrDefault(x => x.Id == clinicId);
-                clinics.Add(clinic);
-            }
+            var clinics = await _context.Clinics
+                .Where(x => clinicIds.Contains(x.Id.Value))
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
 
             return clinics;
         }
+
 
         public async Task ResignFromClinic(Guid clinicId)
         {

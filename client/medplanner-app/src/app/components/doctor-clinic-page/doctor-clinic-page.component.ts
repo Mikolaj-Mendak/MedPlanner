@@ -15,13 +15,16 @@ import { DoctorService } from 'src/app/services/doctor-service';
 export class DoctorClinicPageComponent implements OnInit {
 
     clinics$: Observable<Clinic[]>;
+    currentPage = 1;
+    pageSize = 10;
+    name = '';
+    address = '';
 
     constructor(private doctorService: DoctorService, private dialog: MatDialog, private toastr: ToastrService, private router: Router) {
     }
 
     ngOnInit(): void {
-        this.clinics$ = this.doctorService.getClinicsForDoctor()
-            .pipe(map(response => response["$values"]));
+        this.loadClinics();
     }
 
 
@@ -40,6 +43,16 @@ export class DoctorClinicPageComponent implements OnInit {
 
     showAdmission(clinicId: string): void {
         this.router.navigate(['doctor', 'clinics', 'admission', clinicId]);
+    }
+
+    loadClinics(): void {
+        this.clinics$ = this.doctorService.getClinicsForDoctor(this.currentPage, this.pageSize, this.address, this.name)
+            .pipe(map(response => response["$values"]));
+    }
+
+    onPageChange(newPage: number) {
+        this.currentPage = newPage;
+        this.loadClinics();
     }
 
 }

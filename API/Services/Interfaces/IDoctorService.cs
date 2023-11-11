@@ -11,10 +11,18 @@ namespace API.Services.Interfaces
         Task AddAdmissionConditionToDoctor(DoctorAdmissionConditions admissionCondition);
         Task DeleteAdmissionConditionForDoctor(Guid doctorId, Guid admissionConditionId);
         Task UpdateAdmissionConditionForDoctor(Guid doctorId, Guid admissionConditionId, DoctorAdmissionConditions updatedAdmissionCondition);
-        Task<List<Doctor>> GetDoctorsByClinicId(Guid clinicId);
+        Task<List<Doctor>> GetDoctorsByClinicId(
+          Guid clinicId,
+          int page = 1,
+          int pageSize = 10,
+          string firstName = null,
+          string lastName = null,
+          string pesel = null,
+          string doctorNumber = null
+        );
         Task<DoctorAdmissionConditions> GetAdmissionByClinicAndDoctor(Guid doctorId,Guid clinicId);
         Task<DoctorAdmissionConditions> GetAdmissionByClinicForDoctor(Guid clinicId);
-        Task<List<Clinic>> GetClinicsForDoctor();
+        Task<List<Clinic>> GetClinicsForDoctor(int page = 1, int pageSize = 10, string name = null, string address = null);
         Task ResignFromClinic(Guid clinicId);
     }
 }

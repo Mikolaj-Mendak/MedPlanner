@@ -4,6 +4,7 @@ using API.Entities;
 using API.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Runtime.CompilerServices;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace API.Services
 {
@@ -116,12 +117,43 @@ namespace API.Services
         }
 
         //DOCTOR VISITS
-        public async Task<List<Visit>> GetDoctorIncomingVisits()
+        public async Task<List<Visit>> GetDoctorIncomingVisits(int page, int pageSize, string firstName = null, string lastName = null, string pesel = null, string sortBy = null)
         {
             var doctorId = _userProviderService.GetCurrentUserId();
-            var visits = await _context.Visits
-                .Where(visit => visit.VisitDate > DateTime.Now && visit.DoctorId.ToString() == doctorId )
+            var query = _context.Visits.Where(visit => visit.VisitDate > DateTime.Now && visit.DoctorId.ToString() == doctorId);
+
+            if (!string.IsNullOrEmpty(firstName))
+            {
+                query = query.Where(visit => visit.Patient.FirstName.Contains(firstName));
+            }
+            if (!string.IsNullOrEmpty(lastName))
+            {
+                query = query.Where(visit => visit.Patient.LastName.Contains(lastName));
+            }
+            if (!string.IsNullOrEmpty(pesel))
+            {
+                query = query.Where(visit => visit.Patient.Pesel.Contains(pesel));
+            }
+
+            if (!string.IsNullOrEmpty(sortBy))
+            {
+
+                switch (sortBy.ToLower())
+                {
+                    case "date":
+                        query = query.OrderBy(visit => visit.VisitDate);
+                        break;
+                    case "price":
+                        query = query.OrderBy(visit => visit.Fee);
+                        break;
+                }
+            }
+
+            var visits = await query
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
                 .ToListAsync();
+
 
             foreach (var visit in visits)
             {
@@ -181,9 +213,6 @@ namespace API.Services
 
             return visits;
         }
-
-
-
 
     }
 }

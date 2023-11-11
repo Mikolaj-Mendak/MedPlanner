@@ -6,6 +6,25 @@
             Dodaj klinikę
         </button>
     </div>
+    <div class="filter-container">
+        <div class="filter-inputs">
+            <input class="custom-input" [(ngModel)]="name" placeholder="Nazwa">
+            <input class="custom-input" [(ngModel)]="address" placeholder="Adres">
+        </div>
+        <button class="search-button" (click)="loadClinics()">
+            <i class="material-icons">search</i>
+        </button>
+    </div>
+    <div class="pagination">
+        <div class="button-container">
+            <button class="custom-button" (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1">
+                <mat-icon>keyboard_arrow_left</mat-icon>
+            </button>
+            <button class="custom-button" (click)="onPageChange(currentPage + 1)">
+                <mat-icon>keyboard_arrow_right</mat-icon>
+            </button>
+        </div>
+    </div>
     <table>
         <thead>
             <tr>

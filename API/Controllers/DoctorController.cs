@@ -5,6 +5,7 @@ using API.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json.Serialization;
 using System.Text.Json;
+using System.Globalization;
 
 namespace API.Controllers
 {
@@ -28,9 +29,27 @@ namespace API.Controllers
         }
 
         [HttpGet("doctorsByClinic/{clinicId}")]
-        public async Task<ActionResult<IEnumerable<Doctor>>> GetDoctorsByClinicId(Guid clinicId)
+        public async Task<ActionResult<IEnumerable<Doctor>>> GetDoctorsByClinicId(
+            Guid clinicId,
+            int page = 1,
+            int pageSize = 10,
+            string firstName = null,
+            string lastName = null,
+            string pesel = null,
+            string doctorNumber = null,
+            string phoneNumber = null
+        )
         {
-            var result = await _doctorService.GetDoctorsByClinicId(clinicId);
+            var result = await _doctorService.GetDoctorsByClinicId(
+                clinicId,
+                page,
+                pageSize,
+                firstName,
+                lastName,
+                pesel,
+                doctorNumber
+            );
+
             return Ok(result);
         }
 
@@ -114,14 +133,14 @@ namespace API.Controllers
         }
 
         [HttpGet("clinics")]
-        public async Task<ActionResult<string>> GetClinicsForDoctor()
+        public async Task<ActionResult<string>> GetClinicsForDoctor(int page = 1, int pageSize = 10, string name = null, string address = null)
         {
             var options = new JsonSerializerOptions
             {
                 ReferenceHandler = ReferenceHandler.Preserve,
             };
 
-            var clinics = await _doctorService.GetClinicsForDoctor();
+            var clinics = await _doctorService.GetClinicsForDoctor(page, pageSize, name, address);
 
             var clinicsJson = JsonSerializer.Serialize(clinics, options);
 

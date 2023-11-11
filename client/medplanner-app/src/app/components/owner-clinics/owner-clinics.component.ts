@@ -16,13 +16,16 @@ import { Router } from '@angular/router';
 export class OwnerClinicsComponent implements OnInit {
 
     clinics$: Observable<Clinic[]>;
+    currentPage = 1;
+    pageSize = 10;
+    name = '';
+    address = '';
 
     constructor(private clinicOwnerService: ClinicOwnerServiceService, private dialog: MatDialog, private toastr: ToastrService, private router: Router) {
-
     }
 
     ngOnInit(): void {
-        this.clinics$ = this.clinicOwnerService.getAllClinics();
+        this.loadClinics();
     }
 
     openAddClinic(): void {
@@ -54,6 +57,15 @@ export class OwnerClinicsComponent implements OnInit {
 
     showDetails(clinic: Clinic): void {
         this.router.navigate(['ownerClinics', clinic.id]);
+    }
+
+    loadClinics(): void {
+        this.clinics$ = this.clinicOwnerService.getAllClinics(this.currentPage, this.pageSize, this.address, this.name);
+    }
+
+    onPageChange(newPage: number) {
+        this.currentPage = newPage;
+        this.loadClinics();
     }
 
 }

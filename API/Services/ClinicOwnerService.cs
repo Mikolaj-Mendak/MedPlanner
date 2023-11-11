@@ -198,10 +198,27 @@ namespace API.Services
         }
 
 
-        public async Task<List<Clinic>> GetAllClinics()
+        public async Task<List<Clinic>> GetAllClinics(int page = 1, int pageSize = 10, string name = null, string address = null)
         {
             var user = _currentUserService.GetCurrentUserId();
-            var clinics = await _context.Clinics.Where(x => x.ClinicOwnerId.ToString() == user).ToListAsync();
+
+            var clinicsQuery = _context.Clinics
+                .Where(x => x.ClinicOwnerId.ToString() == user);
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                clinicsQuery = clinicsQuery.Where(x => x.Name.Contains(name));
+            }
+
+            if (!string.IsNullOrEmpty(address))
+            {
+                clinicsQuery = clinicsQuery.Where(x => x.Address.Contains(address));
+            }
+
+            var clinics = await clinicsQuery
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
 
             return clinics;
         }

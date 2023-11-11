@@ -14,10 +14,40 @@ export class DoctorService {
 
     constructor(private http: HttpClient) { }
 
-    getDoctorsForClinic(clinicId: string): Observable<Doctor[]> {
+    getDoctorsForClinic(
+        clinicId: string,
+        currentPage: number = 1,
+        pageSize: number = 10,
+        firstName: string = null,
+        lastName: string = null,
+        pesel: string = null,
+        doctorNumber: string = null
+    ): Observable<Doctor[]> {
+
+        let params = new HttpParams()
+            .set('page', currentPage.toString())
+            .set('pageSize', pageSize.toString());
+
+        if (firstName) {
+            params = params.set('firstName', firstName);
+        }
+
+        if (lastName) {
+            params = params.set('lastName', lastName);
+        }
+
+        if (pesel) {
+            params = params.set('pesel', pesel);
+        }
+
+        if (doctorNumber) {
+            params = params.set('doctorNumber', doctorNumber);
+        }
+
         const url = `${environment.apiUrl}/doctor/doctorsByClinic/${clinicId}`;
-        return this.http.get<Doctor[]>(url);
+        return this.http.get<Doctor[]>(url, { params });
     }
+
 
     getAllDoctors(): Observable<Doctor[]> {
         const url = `${environment.apiUrl}/doctor`;
@@ -29,9 +59,27 @@ export class DoctorService {
         return this.http.get<DoctorAdmissionConditions>(url);
     }
 
-    getClinicsForDoctor(): Observable<Clinic[]> {
+    getClinicsForDoctor(
+        page: number = 1,
+        pageSize: number = 10,
+        address: string = null,
+        name: string = null
+    ): Observable<Clinic[]> {
+
+        let params = new HttpParams()
+            .set('page', page.toString())
+            .set('pageSize', pageSize.toString());
+
+        if (name) {
+            params = params.set('name', name);
+        }
+
+        if (address) {
+            params = params.set('address', address);
+        }
+
         const url = `${environment.apiUrl}/doctor/clinics`;
-        return this.http.get<Clinic[]>(url);
+        return this.http.get<Clinic[]>(url, { params });
     }
 
     resingFromClinic(clinicId: string): Observable<void> {
@@ -49,9 +97,39 @@ export class DoctorService {
         return this.http.post<void>(url, admissionConditionDto);
     }
 
-    getIncominVisits(): Observable<Visit[]> {
+    getIncominVisits(
+        page: number = 1,
+        pageSize: number = 10,
+        firstName: string = null,
+        lastName: string = null,
+        pesel: string = null,
+        sortBy: string = null
+    ): Observable<Visit[]> {
         const url = `${environment.apiUrl}/visit/doctor/incoming`;
-        return this.http.get<Visit[]>(url);
+
+        let params = new HttpParams()
+            .set('page', page.toString())
+            .set('pageSize', pageSize.toString());
+
+        if (firstName) {
+            params = params.set('firstName', firstName);
+        }
+
+        if (lastName) {
+            params = params.set('lastName', lastName);
+        }
+
+        if (pesel) {
+            params = params.set('pesel', pesel);
+        }
+
+
+        if (sortBy) {
+            params = params.set('sortBy', sortBy);
+        }
+
+        return this.http.get<Visit[]>(url, { params });
+
     }
 
     getHistoryVisits(

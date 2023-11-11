@@ -51,7 +51,7 @@ namespace API.Controllers
                 return Ok(clinic);
             }
 
-        [HttpDelete("{clinicId}/clinics")]
+            [HttpDelete("{clinicId}/clinics")]
             public async Task<IActionResult> DeleteClinic(Guid clinicId)
             {
                 await _clinicOwnerService.DeleteClinicAsync(clinicId);
@@ -60,9 +60,9 @@ namespace API.Controllers
 
 
             [HttpGet("clinics")]
-            public async Task<ActionResult<List<Clinic>>> GetAllClinics()
-            {
-                var owners = await _clinicOwnerService.GetAllClinics();
+            public async Task<ActionResult<List<Clinic>>> GetAllClinics(int page = 1, int pageSize = 10, string name = null, string address = null)
+        {
+                var owners = await _clinicOwnerService.GetAllClinics(page, pageSize, name, address);
                 return Ok(owners);
             }
 
