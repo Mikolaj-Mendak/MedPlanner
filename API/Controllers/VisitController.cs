@@ -1,7 +1,10 @@
 ﻿using API.Dtos;
 using API.Entities;
+using API.Services;
 using API.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Globalization;
 
 namespace API.Controllers
 {
@@ -76,18 +79,18 @@ namespace API.Controllers
         }
 
         // GET api/visits/user/{patientId}/incoming
-        [HttpGet("user/{patientId}/incoming")]
-        public async Task<ActionResult<List<Visit>>> GetUserIncomingVisits(Guid patientId)
+        [HttpGet("patient/incoming")]
+        public async Task<ActionResult<List<Visit>>> GetUserIncomingVisits(int page = 1, int pageSize = 10, string firstName = null, string lastName = null, string pesel = null, string sortBy = null)
         {
-            var visits = await _visitService.GetUserIncomingVisits(patientId);
+            var visits = await _visitService.GetUserIncomingVisits(page, pageSize, firstName, lastName, pesel, sortBy);
             return Ok(visits);
         }
 
         // GET api/visits/user/{patientId}/previous
-        [HttpGet("user/{patientId}/previous")]
-        public async Task<ActionResult<List<Visit>>> GetUserPreviousVisits(Guid patientId)
+        [HttpGet("patient/history")]
+        public async Task<ActionResult<List<Visit>>> GetUserPreviousVisits(int page = 1, int pageSize = 10, string firstName = null, string lastName = null, string pesel = null, string sortBy = null)
         {
-            var visits = await _visitService.GetUserPreviousVisits(patientId);
+            var visits = await _visitService.GetUserPreviousVisits(page, pageSize, firstName, lastName, pesel, sortBy);
             return Ok(visits);
         }
 
@@ -105,6 +108,20 @@ namespace API.Controllers
             var visits = await _visitService.GetDoctorPreviousVisits(page, pageSize, firstName, lastName, pesel, sortBy);
 
             return Ok(visits);
+        }
+
+        [HttpGet("visitAppointments")]
+        public async Task<ActionResult<List<GetVisitsAppointmentDto>>> GetVisitAppointments(int page = 1, int pageSize = 10, string firstName = null, string lastName = null, string address = null, string clinicName = null, string sortBy = null)
+        {
+            var visits = await _visitService.GetVisitAppointments(page, pageSize, firstName, lastName, address, clinicName, sortBy);
+            return Ok(visits);
+        }
+
+        [HttpGet("avaliableVisitDates/{doctorId}/{clinicId}")]
+        public async Task<ActionResult<List<DateTime>>> GetAvaliableDates(Guid doctorId, Guid clinicId)
+        {
+            var avaliableDates = await _visitService.GetAllAvailableDateTimesForPatient(doctorId, clinicId);
+            return Ok(avaliableDates);
         }
 
     }

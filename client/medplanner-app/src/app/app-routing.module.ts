@@ -13,6 +13,13 @@ import { DoctorOrClinicOwnerGuard } from './guards/doctor-clinic-owner-guard';
 import { DoctorInocomingVisitsComponent } from './components/doctor-inocoming-visits/doctor-inocoming-visits.component';
 import { DoctorHistoryVisitsComponent } from './components/doctor-history-visits/doctor-history-visits.component';
 import { VisitDoctorDetailsComponent } from './components/visit-doctor-details/visit-doctor-details.component';
+import { PatientIncomingVisitsComponent } from './components/patient-incoming-visits/patient-incoming-visits.component';
+import { UserGuard } from './guards/user-activate-guard';
+import { PatientVisitDetailsComponent } from './components/patient-visit-details/patient-visit-details.component';
+import { PatientVisitsHistoryComponent } from './components/patient-visits-history/patient-visits-history.component';
+import { AddVisitTableComponent } from './components/add-visit-table/add-visit-table.component';
+import { CreateVisitComponent } from './components/create-visit/create-visit.component';
+import { VisitAppointmentDetailsComponent } from './components/visit-appointment-details/visit-appointment-details.component';
 
 const routes: Routes = [
     { path: 'ownerClinics', component: OwnerClinicsComponent, canActivate: [ClinicOwnerGuard] },
@@ -25,7 +32,12 @@ const routes: Routes = [
     { path: 'doctor/incomingVisits', component: DoctorInocomingVisitsComponent, canActivate: [DoctorGuard] },
     { path: 'doctor/historyVisit', component: DoctorHistoryVisitsComponent, canActivate: [DoctorGuard] },
     { path: 'doctor/historyVisit/:id', component: VisitDoctorDetailsComponent, canActivate: [DoctorGuard] },
-    { path: 'doctor/incomingVisit/:id', component: VisitDoctorDetailsComponent, canActivate: [DoctorGuard] }
+    { path: 'doctor/incomingVisit/:id', component: VisitDoctorDetailsComponent, canActivate: [DoctorGuard] },
+    { path: 'patient/incomingVisits', component: PatientIncomingVisitsComponent, canActivate: [UserGuard] },
+    { path: 'patient/historyVisit', component: PatientVisitsHistoryComponent, canActivate: [UserGuard] },
+    { path: 'patient/incomingVisit/:id', component: PatientVisitDetailsComponent, canActivate: [UserGuard] },
+    { path: 'visitAppointment', component: AddVisitTableComponent, canActivate: [UserGuard] },
+    { path: 'createVisit/:doctorId/:clinicId', component: VisitAppointmentDetailsComponent, canActivate: [UserGuard] },
 ];
 
 @NgModule({

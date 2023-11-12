@@ -1,0 +1,61 @@
+<div class="table-wrapper">
+    <h1 class="page-header">Nadchodzące wizyty</h1>
+    <hr />
+    <div class="filter-container">
+        <div class="filter-inputs">
+            <input class="custom-input" [(ngModel)]="firstNameFilter" placeholder="Imię">
+            <input class="custom-input" [(ngModel)]="lastNameFilter" placeholder="Nazwisko">
+            <input class="custom-input" [(ngModel)]="address" placeholder="Adres Przychodni">
+            <input class="custom-input" [(ngModel)]="clinicName" placeholder="Nazwa Przychodni">
+        </div>
+        <div class="sort-container">
+            <select id="sortSelect" [(ngModel)]="sortOption">
+                <option value="date">Data</option>
+                <option value="price">Cena</option>
+            </select>
+        </div>
+        <button class="search-button" (click)="getVisitAppointments()">
+            <i class="material-icons">search</i>
+        </button>
+    </div>
+    <div class="pagination">
+        <div class="button-container">
+            <button class="custom-button" (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1">
+                <mat-icon>keyboard_arrow_left</mat-icon>
+            </button>
+            <button class="custom-button" (click)="onPageChange(currentPage + 1)">
+                <mat-icon>keyboard_arrow_right</mat-icon>
+            </button>
+        </div>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Imie i Nazwisko Lekarza</th>
+                <th>Specjalizacja</th>
+                <th>Adres Przychodni</th>
+                <th>Nazwa Przychodni</th>
+                <th>Koszt</th>
+                <th>Najbliższy wolny termin</th>
+                <th style="width: 100px;"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let visit of (appointmentVisits$ | async)">
+                <td>{{ visit.doctorFirstName }} {{visit.doctorLastName}}</td>
+                <td>{{visit.specialization}}</td>
+                <td>{{visit.clinicAddress}}</td>
+                <td>{{visit.clinicName}}</td>
+                <td *ngIf="visit.fee != 0">{{visit.fee}}</td>
+                <td *ngIf="visit.fee == 0">Świadczenie NFZ</td>
+                <td>{{formatDateTime(visit.closestDate)}}</td>
+                <td>
+                    <button class="add-visit" mat-icon-button
+                        (click)="routeToCreateVisitComponent(visit.doctorId, visit.clinicId)">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

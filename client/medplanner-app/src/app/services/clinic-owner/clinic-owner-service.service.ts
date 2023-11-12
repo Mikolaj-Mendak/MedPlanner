@@ -46,6 +46,7 @@ export class ClinicOwnerServiceService {
     }
 
     getSingleClinic(clinicId: string): Observable<Clinic> {
+        console.log(clinicId)
         const url = `${environment.apiUrl}/clinicowner/clinics/${clinicId}`;
         return this.http.get<Clinic>(url);
     }

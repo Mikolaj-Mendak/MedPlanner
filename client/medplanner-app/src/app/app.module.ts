@@ -32,6 +32,13 @@ import { SetDoctorAdmissionForClinicDialogComponent } from './components/set-doc
 import { DoctorInocomingVisitsComponent } from './components/doctor-inocoming-visits/doctor-inocoming-visits.component';
 import { DoctorHistoryVisitsComponent } from './components/doctor-history-visits/doctor-history-visits.component';
 import { VisitDoctorDetailsComponent } from './components/visit-doctor-details/visit-doctor-details.component';
+import { PatientIncomingVisitsComponent } from './components/patient-incoming-visits/patient-incoming-visits.component';
+import { PatientVisitsHistoryComponent } from './components/patient-visits-history/patient-visits-history.component';
+import { PatientVisitDetailsComponent } from './components/patient-visit-details/patient-visit-details.component';
+import { AddVisitTableComponent } from './components/add-visit-table/add-visit-table.component';
+import { CreateVisitComponent } from './components/create-visit/create-visit.component';
+import { VisitAppointmentDetailsComponent } from './components/visit-appointment-details/visit-appointment-details.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 
 @NgModule({
@@ -54,7 +61,14 @@ import { VisitDoctorDetailsComponent } from './components/visit-doctor-details/v
         SetDoctorAdmissionForClinicDialogComponent,
         DoctorInocomingVisitsComponent,
         DoctorHistoryVisitsComponent,
-        VisitDoctorDetailsComponent
+        VisitDoctorDetailsComponent,
+        PatientIncomingVisitsComponent,
+        PatientVisitsHistoryComponent,
+        PatientVisitDetailsComponent,
+        AddVisitTableComponent,
+        CreateVisitComponent,
+        VisitAppointmentDetailsComponent
+
     ],
     imports: [
         BrowserModule,
@@ -71,7 +85,8 @@ import { VisitDoctorDetailsComponent } from './components/visit-doctor-details/v
         MatMenuModule,
         TimepickerModule.forRoot(),
         BsDatepickerModule.forRoot(),
-        NgxMaterialTimepickerModule
+        NgxMaterialTimepickerModule,
+        FullCalendarModule
     ],
     providers: [
         provideAnimations(),

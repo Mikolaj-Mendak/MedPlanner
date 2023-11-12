@@ -1,0 +1,42 @@
+<div class="main-wrapper" *ngIf="clinic$ | async as clinic" [formGroup]="visitForm">
+    <ng-container *ngIf="doctor$ | async as doctor">
+        <ng-container *ngIf="doctorAdmission$ | async as doctorAdmission">
+            <h1 class="page-header">Szczegóły wizyty</h1>
+            <hr />
+            <div class="element-container">
+                <div class="clinic-details">
+                    <p class="details-header">Klinika</p>
+                    <p>Nazwa: {{clinic.name}}</p>
+                    <p>Adres: {{clinic.address}}</p>
+                    <p>Numer Telefonu: {{clinic.phoneNumber}}</p>
+                    <p>NIP: {{clinic.nip}}</p>
+                </div>
+                <div class="doctor-details">
+                    <p class="details-header">Lekarz</p>
+                    <p>Imie i Nazwisko: {{doctor.firstName}} {{doctor.lastName}}</p>
+                    <p>Specjalizacja: {{doctorAdmission.specialization}}</p>
+                    <p *ngIf="doctorAdmission.fee != 0 || doctorAdmission.fee !== null">Koszt: {{doctorAdmission.fee}}
+                    </p>
+                    <p *ngIf="doctorAdmission.fee == 0 || doctorAdmission.fee == null">Koszt: Usługa NFZ</p>
+                </div>
+            </div>
+            <h1 class="page-header">Opis</h1>
+            <hr />
+            <div style="text-align: center;">
+                <textarea style="margin-bottom: 2em;" rows="10" cols="100" formControlName="description"></textarea>
+                <h1 class="page-header">Wybierz datę i godzine</h1>
+            </div>
+            <hr />
+            <div class="callendar-container">
+                <full-calendar #calendar [options]="calendarOptions"></full-calendar>
+            </div>
+        </ng-container>
+    </ng-container>
+    <div class=" add-visit-container">
+        <button class="custom-button" (click)="addVisit()">Umów wizytę</button>
+        <div class="label-container">
+            <a>{{datePlaceholder}}</a>
+        </div>
+    </div>
+
+</div>

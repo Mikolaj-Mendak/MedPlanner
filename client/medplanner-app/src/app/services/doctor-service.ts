@@ -54,6 +54,11 @@ export class DoctorService {
         return this.http.get<Doctor[]>(url);
     }
 
+    getDoctorById(doctorId: string): Observable<Doctor> {
+        const url = `${environment.apiUrl}/doctor/${doctorId}`;
+        return this.http.get<Doctor>(url);
+    }
+
     getAdmissionByClinicAndDoctor(doctorId: string, clinicId: string): Observable<DoctorAdmissionConditions> {
         const url = `${environment.apiUrl}/doctor/getAdmissionByClinicAndDoctor/${doctorId}/${clinicId}`;
         return this.http.get<DoctorAdmissionConditions>(url);

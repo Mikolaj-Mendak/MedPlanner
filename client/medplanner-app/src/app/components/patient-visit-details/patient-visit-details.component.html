@@ -1,0 +1,37 @@
+<div class="main-wrapper" *ngIf="visit | async as visit">
+    <h1 class="page-header">Szczegóły wizyty</h1>
+    <hr />
+    <div class="element-container">
+        <div class="clinic-details">
+            <p class="details-header">Klinika</p>
+            <p>Nazwa: {{visit.clinic.name}}</p>
+            <p>Adres: {{visit.clinic.address}}</p>
+            <p>Numer Telefonu: {{visit.clinic.phoneNumber}}</p>
+            <p>NIP: {{visit.clinic.nip}}</p>
+        </div>
+        <div class="doctor-details">
+            <p class="details-header">Lekarz</p>
+            <p>Imie i Nazwisko: {{visit.doctor.firstName}}</p>
+            <p>Specjalizacja: </p>
+            <p *ngIf="visit.fee != 0 || visit.fee !== null">Koszt: {{visit.fee}}</p>
+            <p *ngIf="visit.fee == 0 || visit.fee == null">Koszt: Usługa NFZ</p>
+            <p>Imie i Nazwisko: {{visit.doctor.firstName}}</p>
+        </div>
+
+    </div>
+    <h1 class="page-header">Opis</h1>
+    <hr />
+    <div class="area-container">
+        <textarea rows="10" cols="100" [(ngModel)]="visit.description"></textarea>
+        <div class="button-container">
+            <button class="custom-button">Edytuj</button>
+        </div>
+    </div>
+    <h1 class="page-header">Zalecenia</h1>
+    <hr />
+    <div class="area-container">
+        <textarea rows="10" cols="100" [(ngModel)]="visit.reccomendations"></textarea>
+        <div class="button-container">
+        </div>
+    </div>
+</div>

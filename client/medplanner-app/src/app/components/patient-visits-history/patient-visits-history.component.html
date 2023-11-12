@@ -1,0 +1,65 @@
+<div class="table-wrapper">
+    <h1 class="page-header">Historia wizyt</h1>
+    <hr />
+    <div class="filter-container">
+        <div class="filter-inputs">
+            <input class="custom-input" [(ngModel)]="firstNameFilter" placeholder="Imię">
+            <input class="custom-input" [(ngModel)]="lastNameFilter" placeholder="Nazwisko">
+            <input class="custom-input" [(ngModel)]="peselFilter" placeholder="PESEL">
+        </div>
+        <div class="sort-container">
+            <select id="sortSelect" [(ngModel)]="sortOption">
+                <option value="date">Data</option>
+                <option value="price">Cena</option>
+            </select>
+        </div>
+        <button class="search-button" (click)="loadVisits()">
+            <i class="material-icons">search</i>
+        </button>
+    </div>
+    <div class="pagination">
+        <div class="button-container">
+            <button class="custom-button" (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1">
+                <mat-icon>keyboard_arrow_left</mat-icon>
+            </button>
+            <button class="custom-button" (click)="onPageChange(currentPage + 1)">
+                <mat-icon>keyboard_arrow_right</mat-icon>
+            </button>
+        </div>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Imie i Nazwisko Lekarza</th>
+                <th>Pesel</th>
+                <th>Koszt</th>
+                <th>Data</th>
+                <th style="width: 100px;"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let visit of (visits$ | async)" [ngClass]="{'cancelled-visit': !visit.isActive}">
+                <td>{{ visit.doctor.firstName }} {{visit.doctor.lastName}}</td>
+                <td>{{ visit.patient.pesel }}</td>
+                <td>{{ visit.fee }}</td>
+                <td>{{ formatDateTime(visit.visitDate) }}</td>
+                <td>
+                    <button class="menu-icon" mat-icon-button [matMenuTriggerFor]="menu"
+                        aria-label="Przykładowy przycisk ikonowy z menu">
+                        <mat-icon>menu</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="openDetails(visit.id)">
+                            <mat-icon style="color: blue;">info</mat-icon>
+                            <span>Szczegóły</span>
+                        </button>
+                        <button mat-menu-item (click)="cancelVisit(visit.id)">
+                            <mat-icon style="color: red;">cancel</mat-icon>
+                            <span>Anuluj</span>
+                        </button>
+                    </mat-menu>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
