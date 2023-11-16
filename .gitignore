@@ -4,3 +4,8 @@
 API/obj/Debug/net7.0/API.dll
 *.dll
 *.pdb
+.vs/ProjectEvaluation/medplanner.projects.v5.2
+.vs/ProjectEvaluation/medplanner.metadata.v5.2
+.vs/MedPlanner/v17/HierarchyCache.v1.txt
+.vs/MedPlanner/v17/.suo
+.vs/MedPlanner/v17/.futdcache.v2
