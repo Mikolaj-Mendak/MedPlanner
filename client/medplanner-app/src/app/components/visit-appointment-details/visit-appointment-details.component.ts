@@ -69,8 +69,6 @@ export class VisitAppointmentDetailsComponent implements OnInit, AfterViewInit {
 
     }
 
-
-
     ngOnInit(): void {
         this.loadClinicData();
         this.loadDoctorData();
@@ -136,7 +134,6 @@ export class VisitAppointmentDetailsComponent implements OnInit, AfterViewInit {
             () => {
                 this.toastr.success('Wizyta została dodana pomyślnie.', 'Sukces');
                 console.log("success");
-                // Przekierowanie po udanym dodaniu wizyty
                 this.router.navigate(['/patient/incomingVisits']);
             },
             (error) => {
@@ -190,6 +187,4 @@ export class VisitAppointmentDetailsComponent implements OnInit, AfterViewInit {
 
         this.datePlaceholder = `${formattedDate} ${formattedTime}`;
     }
-
-
 }

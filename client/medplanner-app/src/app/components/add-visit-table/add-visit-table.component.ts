@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { GetVisitAppointmentDto } from 'src/app/DTOs/get-visit-appointment-dto';
 import { PatientService } from 'src/app/services/patient.service';
@@ -19,12 +19,17 @@ export class AddVisitTableComponent implements OnInit {
     sortOption = '';
     address = '';
     clinicName = '';
+    specialization: '';
 
-    constructor(private patientService: PatientService, private router: Router) {
-
+    constructor(private patientService: PatientService, private router: Router, private route: ActivatedRoute) {
     }
 
     ngOnInit(): void {
+        this.route.queryParams.subscribe(params => {
+            this.address = params['city'];
+            this.specialization = params['specialization'];
+            this.sortOption = params['sortBy'] == 'true' ? 'price' : 'none';
+        });
         this.getVisitAppointments();
     }
 
@@ -36,6 +41,7 @@ export class AddVisitTableComponent implements OnInit {
             this.lastNameFilter,
             this.address,
             this.clinicName,
+            this.specialization,
             this.sortOption);
     }
 

@@ -298,7 +298,7 @@ namespace API.Services
         }
 
 
-        public async Task<List<GetVisitsAppointmentDto>> GetVisitAppointments(int page = 1, int pageSize = 10, string firstName = null, string lastName = null, string address = null, string clinicName = null,  string sortBy = null)
+        public async Task<List<GetVisitsAppointmentDto>> GetVisitAppointments(int page = 1, int pageSize = 10, string firstName = null, string lastName = null, string address = null, string clinicName = null, string specialization = null,  string sortBy = null)
         {
             var doctors = await  _context.Doctors.Include(x => x.ClinicDoctors).ToListAsync();
             var clinics = await _context.Clinics.ToListAsync();
@@ -349,6 +349,11 @@ namespace API.Services
             if (!string.IsNullOrEmpty(clinicName))
             {
                 result = result.Where(x => !string.IsNullOrEmpty(x.ClinicName) && x.ClinicName.Contains(clinicName)).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(specialization))
+            {
+                result = result.Where(x => !string.IsNullOrEmpty(x.Specialization) && x.Specialization.Contains(specialization)).ToList();
             }
 
             if (!string.IsNullOrEmpty( address))

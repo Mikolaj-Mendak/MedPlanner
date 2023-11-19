@@ -102,6 +102,7 @@ export class PatientService {
         lastName: string = null,
         address: string = null,
         clinicName: string = null,
+        specialization: string = null,
         sortBy: string = null):
         Observable<GetVisitAppointmentDto[]> {
         const url = `${environment.apiUrl}/visit/visitAppointments`;
@@ -124,6 +125,10 @@ export class PatientService {
 
         if (clinicName) {
             params = params.set('clinicName', clinicName);
+        }
+
+        if (specialization) {
+            params = params.set('specialization', specialization);
         }
 
         if (sortBy) {

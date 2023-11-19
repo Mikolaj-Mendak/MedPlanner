@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth-service';
 import { UserRolesEnum } from 'src/app/enums/user-roles-enum';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-header',
@@ -12,14 +13,17 @@ import { UserRolesEnum } from 'src/app/enums/user-roles-enum';
 export class HeaderComponent implements OnInit {
 
     loginForm: FormGroup;
+    searchForm: FormGroup;
     isLogged: boolean;
     currentUser: any;
     currentTime: Date;
 
     constructor(private dialog: MatDialog,
         private formBuilder: FormBuilder,
-        private authService: AuthService) {
+        private authService: AuthService,
+        private router: Router) {
         this.setLoginForm();
+        this.initSearchForm();
     }
 
     ngOnInit(): void {
@@ -56,6 +60,14 @@ export class HeaderComponent implements OnInit {
         }
     }
 
+    initSearchForm(): void {
+        this.searchForm = this.formBuilder.group({
+            city: ['', Validators.required],
+            specialization: ['', Validators.required],
+            sortBy: [null, Validators.required]
+        });
+    }
+
     logout(): void {
         this.authService.logout();
         localStorage.removeItem('currentUser');
@@ -78,5 +90,16 @@ export class HeaderComponent implements OnInit {
         if (currentUser && currentUser.role) {
             return currentUser.role;
         }
+    }
+
+    onSearchClick(): void {
+        const { city, specialization, sortBy } = this.searchForm.value;
+        this.router.navigate(['/visitAppointment'], {
+            queryParams: {
+                city,
+                specialization,
+                sortBy
+            }
+        });
     }
 }

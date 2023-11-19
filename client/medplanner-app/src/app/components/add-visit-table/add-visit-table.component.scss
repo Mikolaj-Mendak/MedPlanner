@@ -182,6 +182,24 @@ table {
   }
 
 
+  @media screen and (max-width: 768px) {
+    .page-header {
+        display: none; 
+    }
+
+    .table-wrapper{
+        margin-left: -4em;
+        .filter-container{
+            align-self: start;
+            margin-left: 8em;
+            flex-direction: column;
+            .filter-inputs{
+                flex-direction: column;
+            }
+        }
+    }
+}
+
 
 
 
