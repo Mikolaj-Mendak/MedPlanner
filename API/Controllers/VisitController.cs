@@ -1,7 +1,10 @@
-﻿using API.Dtos;
+﻿using API.Authorization;
+using API.Dtos;
 using API.Entities;
+using API.Enums;
 using API.Services;
 using API.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Globalization;
@@ -17,7 +20,7 @@ namespace API.Controllers
             _visitService = visitService;
         }
 
-        // GET api/visits/{visitId}
+        [RolesAuthorization(UserRoleEnum.Doctor, UserRoleEnum.User)]
         [HttpGet("{visitId}")]
         public async Task<ActionResult<Visit>> GetVisit(Guid visitId)
         {
@@ -30,39 +33,7 @@ namespace API.Controllers
             return Ok(visit);
         }
 
-        // GET api/visits/active
-        [HttpGet("active")]
-        public async Task<ActionResult<List<Visit>>> GetAllActiveVisits()
-        {
-            var visits = await _visitService.GetAllActiveVisits();
-            return Ok(visits);
-        }
-
-        // GET api/visits/inactive
-        [HttpGet("inactive")]
-        public async Task<ActionResult<List<Visit>>> GetInactiveVisits()
-        {
-            var visits = await _visitService.GetInactiveVisits();
-            return Ok(visits);
-        }
-
-        // GET api/visits/incoming
-        [HttpGet("incoming")]
-        public async Task<ActionResult<List<Visit>>> GetIncomingActiveVisits()
-        {
-            var visits = await _visitService.GetIncomingActiveVisits();
-            return Ok(visits);
-        }
-
-        // GET api/visits/previous
-        [HttpGet("previous")]
-        public async Task<ActionResult<List<Visit>>> GetPreviousActiveVisits()
-        {
-            var visits = await _visitService.GetPreviousActiveVisits();
-            return Ok(visits);
-        }
-
-        // POST api/visits
+        [RolesAuthorization(UserRoleEnum.User)]
         [HttpPost]
         public async Task<ActionResult> AddVisit([FromBody] CreateVisitDto visitDto)
         {
@@ -70,7 +41,7 @@ namespace API.Controllers
             return Ok();
         }
 
-        // PUT api/visits/cancel/{visitId}
+        [RolesAuthorization(UserRoleEnum.Doctor, UserRoleEnum.User)]
         [HttpPut("cancel/{visitId}")]
         public async Task<ActionResult> CancelVisit(Guid visitId)
         {
@@ -78,7 +49,7 @@ namespace API.Controllers
             return Ok();
         }
 
-        // GET api/visits/user/{patientId}/incoming
+        [RolesAuthorization(UserRoleEnum.User)]
         [HttpGet("patient/incoming")]
         public async Task<ActionResult<List<Visit>>> GetUserIncomingVisits(int page = 1, int pageSize = 10, string firstName = null, string lastName = null, string pesel = null, string sortBy = null)
         {
@@ -86,7 +57,7 @@ namespace API.Controllers
             return Ok(visits);
         }
 
-        // GET api/visits/user/{patientId}/previous
+        [RolesAuthorization(UserRoleEnum.Doctor, UserRoleEnum.User)]
         [HttpGet("patient/history")]
         public async Task<ActionResult<List<Visit>>> GetUserPreviousVisits(int page = 1, int pageSize = 10, string firstName = null, string lastName = null, string pesel = null, string sortBy = null)
         {
@@ -94,7 +65,7 @@ namespace API.Controllers
             return Ok(visits);
         }
 
-
+        [RolesAuthorization(UserRoleEnum.Doctor)]
         [HttpGet("doctor/incoming")]
         public async Task<ActionResult<List<Visit>>> GetDoctorIncomingVisits(int page = 1, int pageSize = 10, string firstName = null, string lastName = null, string pesel = null, string sortBy = null)
         {
@@ -102,6 +73,7 @@ namespace API.Controllers
             return Ok(visits);
         }
 
+        [RolesAuthorization(UserRoleEnum.Doctor)]
         [HttpGet("doctor/history")]
         public async Task<ActionResult<List<Visit>>> GetDoctorPreviousVisits(int page = 1, int pageSize = 10, string firstName = null, string lastName = null, string pesel = null, string sortBy = null)
         {
@@ -110,13 +82,15 @@ namespace API.Controllers
             return Ok(visits);
         }
 
+        [RolesAuthorization(UserRoleEnum.User)]
         [HttpGet("visitAppointments")]
-        public async Task<ActionResult<List<GetVisitsAppointmentDto>>> GetVisitAppointments(int page = 1, int pageSize = 10, string firstName = null, string lastName = null, string address = null, string clinicName = null, string sortBy = null)
+        public async Task<ActionResult<List<GetVisitsAppointmentDto>>> GetVisitAppointments(int page = 1, int pageSize = 10, string firstName = null, string lastName = null, string address = null, string clinicName = null, string specialization = null, string sortBy = null)
         {
-            var visits = await _visitService.GetVisitAppointments(page, pageSize, firstName, lastName, address, clinicName, sortBy);
+            var visits = await _visitService.GetVisitAppointments(page, pageSize, firstName, lastName, address, clinicName, specialization, sortBy);
             return Ok(visits);
         }
 
+        [RolesAuthorization(UserRoleEnum.User)]
         [HttpGet("avaliableVisitDates/{doctorId}/{clinicId}")]
         public async Task<ActionResult<List<DateTime>>> GetAvaliableDates(Guid doctorId, Guid clinicId)
         {

@@ -1,7 +1,9 @@
 ﻿using API.Dtos;
 using API.Entities;
+using API.Enums;
 using API.Services.Interfaces;
 using Microsoft.IdentityModel.Tokens;
+using System.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -17,14 +19,15 @@ namespace API.Services
             _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"]));
         }
 
-        public string GenerateToken(User user)
+        public string GenerateToken(User user, UserRoleEnum role)
         {
 
             var claims = new List<Claim>
             {
             new Claim(JwtRegisteredClaimNames.NameId, user.Id.ToString()),
-             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
-            };
+             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+              new Claim(ClaimTypes.Role, role.ToString())
+                };
 
             var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
 

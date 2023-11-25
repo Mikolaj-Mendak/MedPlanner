@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    public class AuthorizationController : BaseController
+    [ApiController]
+    [Route("api/[controller]")]
+    public class AuthorizationController : Controller
     {
         private readonly IAuthorizationService _authorizationService;
 

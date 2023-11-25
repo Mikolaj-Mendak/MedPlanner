@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Text.Json.Serialization;
 using System.Text.Json;
 using System.Globalization;
+using API.Authorization;
+using API.Enums;
 
 namespace API.Controllers
 {
@@ -28,6 +30,7 @@ namespace API.Controllers
             return Ok(result);
         }
 
+        [RolesAuthorization(UserRoleEnum.ClinicOwner, UserRoleEnum.User, UserRoleEnum.Doctor)]
         [HttpGet("doctorsByClinic/{clinicId}")]
         public async Task<ActionResult<IEnumerable<Doctor>>> GetDoctorsByClinicId(
             Guid clinicId,
@@ -53,6 +56,7 @@ namespace API.Controllers
             return Ok(result);
         }
 
+        [RolesAuthorization(UserRoleEnum.ClinicOwner, UserRoleEnum.User, UserRoleEnum.Doctor)]
         [HttpGet("{id}")]
         public async Task<ActionResult<IEnumerable<Doctor>>> GetDoctor(Guid id)
         {
@@ -60,6 +64,7 @@ namespace API.Controllers
             return Ok(result);
         }
 
+        [RolesAuthorization(UserRoleEnum.ClinicOwner, UserRoleEnum.User, UserRoleEnum.Doctor)]
         [HttpPut("{doctorId}")]
         public async Task<IActionResult> UpdateDoctor(Guid doctorId, [FromBody] DoctorUpdateDto doctorUpdateDto)
         {
@@ -67,6 +72,8 @@ namespace API.Controllers
 
             return NoContent();
         }
+
+        [RolesAuthorization( UserRoleEnum.Doctor)]
         [HttpPost("admission")]
         public async Task<IActionResult> AddAdmissionCondition( [FromBody] DoctorAdmissionConditionsDto? admissionConditionDto)
         {
@@ -89,9 +96,7 @@ namespace API.Controllers
             return NoContent();
         }
 
-
-
-
+        [RolesAuthorization(UserRoleEnum.Doctor)]
         [HttpDelete("{doctorId}/admissionconditions/{admissionConditionId}")]
         public async Task<IActionResult> DeleteAdmissionCondition(Guid doctorId, Guid admissionConditionId)
         {
@@ -99,6 +104,7 @@ namespace API.Controllers
             return NoContent();
         }
 
+        [RolesAuthorization(UserRoleEnum.Doctor)]
         [HttpPut("{doctorId}/admissionconditions/{admissionConditionId}")]
         public async Task<IActionResult> UpdateAdmissionCondition(Guid doctorId, Guid admissionConditionId, [FromBody] DoctorAdmissionConditionsDto updatedAdmissionConditionDto)
         {
@@ -118,6 +124,7 @@ namespace API.Controllers
             return Ok();
         }
 
+        [RolesAuthorization(UserRoleEnum.ClinicOwner, UserRoleEnum.User, UserRoleEnum.Doctor)]
         [HttpGet("getAdmissionByClinicAndDoctor/{doctorId}/{clinicId}")]
         public async Task<IActionResult> GetAdmissionByClinicAndDoctor(Guid doctorId, Guid clinicId)
         {
@@ -125,6 +132,7 @@ namespace API.Controllers
             return Ok(x);
         }
 
+        [RolesAuthorization(UserRoleEnum.ClinicOwner, UserRoleEnum.User, UserRoleEnum.Doctor)]
         [HttpGet("getAdmissionByClinicForDoctor/{clinicId}")]
         public async Task<IActionResult> GetAdmissionByClinicForDoctor(Guid doctorId, Guid clinicId)
         {
@@ -132,6 +140,7 @@ namespace API.Controllers
             return Ok(x);
         }
 
+        [RolesAuthorization(UserRoleEnum.ClinicOwner, UserRoleEnum.User, UserRoleEnum.Doctor)]
         [HttpGet("clinics")]
         public async Task<ActionResult<string>> GetClinicsForDoctor(int page = 1, int pageSize = 10, string name = null, string address = null)
         {
@@ -147,6 +156,7 @@ namespace API.Controllers
             return Ok(clinicsJson);
         }
 
+        [RolesAuthorization(UserRoleEnum.Doctor)]
         [HttpDelete("clinics/{clinicId}")]
         public async Task<IActionResult> ResignFromClinic(Guid clinicId)
         {

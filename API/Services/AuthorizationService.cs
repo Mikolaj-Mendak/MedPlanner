@@ -24,7 +24,7 @@ namespace API.Services
 
         public string GenerateJwtToken(User user)
         {
-            return _tokenService.GenerateToken(user);
+            return _tokenService.GenerateToken(user, user.Role);
         }
 
         public async Task<UserDto> LoginAsync(LoginDto loginDto)

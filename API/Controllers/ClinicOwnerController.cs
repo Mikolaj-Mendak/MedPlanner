@@ -1,7 +1,8 @@
-﻿using API.Dtos;
+﻿using API.Authorization;
+using API.Dtos;
 using API.Entities;
+using API.Enums;
 using API.Services.Interfaces;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -16,9 +17,9 @@ namespace API.Controllers
                 _clinicOwnerService = clinicOwnerService;
             }
 
-
+            [RolesAuthorization(UserRoleEnum.ClinicOwner)]
             [HttpGet("{ownerId}")]
-            public async Task<ActionResult<ClinicOwner>> GetClinicOwner(Guid ownerId)
+        public async Task<ActionResult<ClinicOwner>> GetClinicOwner(Guid ownerId)
             {
                 var owner = await _clinicOwnerService.GetClinicOwner(ownerId);
 
@@ -30,13 +31,8 @@ namespace API.Controllers
                 return Ok(owner);
             }
 
-            [HttpGet]
-            public async Task<ActionResult<List<ClinicOwner>>> GetAllOwners()
-            {
-                var owners = await _clinicOwnerService.GetAllOwners();
-                return Ok(owners);
-            }
 
+            [RolesAuthorization(UserRoleEnum.ClinicOwner)]
             [HttpPut("{ownerId}")]
             public async Task<IActionResult> UpdateOwner(Guid ownerId, [FromBody] OwnerUpdateDto updatedOwnerDto)
             {
@@ -44,6 +40,7 @@ namespace API.Controllers
                     return NoContent();
             }
 
+            [RolesAuthorization(UserRoleEnum.ClinicOwner)]
             [HttpPost("clinics")]
             public async Task<ActionResult<Clinic>> AddClinic([FromBody] AddClinicDto addClinicDto)
             {
@@ -51,6 +48,7 @@ namespace API.Controllers
                 return Ok(clinic);
             }
 
+            [RolesAuthorization(UserRoleEnum.ClinicOwner)]
             [HttpDelete("{clinicId}/clinics")]
             public async Task<IActionResult> DeleteClinic(Guid clinicId)
             {
@@ -58,14 +56,15 @@ namespace API.Controllers
                 return NoContent();
             }
 
-
+            [RolesAuthorization(UserRoleEnum.ClinicOwner, UserRoleEnum.User,UserRoleEnum.Doctor)]
             [HttpGet("clinics")]
             public async Task<ActionResult<List<Clinic>>> GetAllClinics(int page = 1, int pageSize = 10, string name = null, string address = null)
-        {
+            {
                 var owners = await _clinicOwnerService.GetAllClinics(page, pageSize, name, address);
                 return Ok(owners);
             }
 
+            [RolesAuthorization(UserRoleEnum.ClinicOwner, UserRoleEnum.User, UserRoleEnum.Doctor)]
             [HttpGet("clinics/{clinicId}")]
             public async Task<ActionResult<Clinic>> GetClinicById(Guid clinicId)
             {
@@ -73,7 +72,7 @@ namespace API.Controllers
                 return Ok(owner);
             }
 
-
+            [RolesAuthorization(UserRoleEnum.ClinicOwner)]
             [HttpPost("clinics/{clinicId}/doctors/{doctorId}")]
             public async Task<IActionResult> AddDoctorToClinic(Guid clinicId, Guid doctorId)
             {
@@ -81,6 +80,8 @@ namespace API.Controllers
                     return NoContent();
             }
 
+
+            [RolesAuthorization(UserRoleEnum.ClinicOwner)]
             [HttpDelete("removeDoctor/clinics/{clinicId}/doctors/{doctorId}")]
             public async Task<IActionResult> RemoveDoctorFromClinic(Guid clinicId, Guid doctorId)
             {
@@ -88,6 +89,8 @@ namespace API.Controllers
                 return NoContent();
             }
 
+
+            [RolesAuthorization(UserRoleEnum.ClinicOwner)]
             [HttpPost("clinics/{clinicId}/doctorNumber/{doctorNumber}")]
             public async Task<IActionResult> AddDoctorToClinicByNumber(Guid clinicId, string doctorNumber)
             {
