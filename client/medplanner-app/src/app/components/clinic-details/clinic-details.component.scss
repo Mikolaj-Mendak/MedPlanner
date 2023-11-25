@@ -206,3 +206,15 @@ table {
         cursor: pointer; 
     }
   }
+
+  @media screen and (max-width: 768px) {
+    .page-header {
+    display: none;
+    }
+
+    .details-container {
+        margin-left: 5em;
+
+    
+    }
+}

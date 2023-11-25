@@ -24,14 +24,14 @@
         <thead>
             <tr>
                 <th>Nazwa</th>
-                <th>Adres</th>
+                <th class="if-display">Adres</th>
                 <th style="width: 100px;"></th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let clinic of (clinics$ | async)">
                 <td>{{ clinic.Name }}</td>
-                <td>{{ clinic.Address
+                <td class="if-display">{{ clinic.Address
                     }}</td>
                 <td>
                     <button style="background-color: transparent; border: none; color: red;" mat-icon-button

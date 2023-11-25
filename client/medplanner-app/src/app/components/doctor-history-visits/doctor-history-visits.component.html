@@ -31,18 +31,18 @@
         <thead>
             <tr>
                 <th>Imie i Nazwisko</th>
-                <th>Pesel</th>
-                <th>Koszt</th>
-                <th>Data</th>
+                <th class="if-display">Pesel</th>
+                <th class="if-display">Koszt</th>
+                <th class="if-display">Data</th>
                 <th style="width: 100px;"></th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let visit of (visits$ | async)" [ngClass]="{'cancelled-visit': !visit.isActive}">
                 <td>{{ visit.patient.firstName }} {{visit.patient.lastName}}</td>
-                <td>{{ visit.patient.pesel }}</td>
-                <td>{{ visit.fee }}</td>
-                <td>{{ formatDateTime(visit.visitDate) }}</td>
+                <td class="if-display">{{ visit.patient.pesel }}</td>
+                <td class="if-display">{{ visit.fee }}</td>
+                <td class="if-display">{{ formatDateTime(visit.visitDate) }}</td>
                 <td>
                     <button class="menu-icon" mat-icon-button [matMenuTriggerFor]="menu"
                         aria-label="Przykładowy przycisk ikonowy z menu">
