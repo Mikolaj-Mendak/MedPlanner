@@ -33,23 +33,23 @@
         <thead>
             <tr>
                 <th>Imie i Nazwisko Lekarza</th>
-                <th>Specjalizacja</th>
-                <th>Adres Przychodni</th>
-                <th>Nazwa Przychodni</th>
-                <th>Koszt</th>
-                <th>Najbliższy wolny termin</th>
+                <th class="if-display">Specjalizacja</th>
+                <th class="if-display">Adres Przychodni</th>
+                <th class="if-display">Nazwa Przychodni</th>
+                <th class="if-display">Koszt</th>
+                <th class="if-display">Najbliższy wolny termin</th>
                 <th style="width: 100px;"></th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let visit of (appointmentVisits$ | async)">
                 <td>{{ visit.doctorFirstName }} {{visit.doctorLastName}}</td>
-                <td>{{visit.specialization}}</td>
-                <td>{{visit.clinicAddress}}</td>
-                <td>{{visit.clinicName}}</td>
-                <td *ngIf="visit.fee != 0">{{visit.fee}}</td>
-                <td *ngIf="visit.fee == 0">Świadczenie NFZ</td>
-                <td>{{formatDateTime(visit.closestDate)}}</td>
+                <td class="if-display">{{visit.specialization}}</td>
+                <td class="if-display">{{visit.clinicAddress}}</td>
+                <td class="if-display">{{visit.clinicName}}</td>
+                <td class="if-display" *ngIf="visit.fee != 0">{{visit.fee}}</td>
+                <td class="if-display" *ngIf="visit.fee == 0">Świadczenie NFZ</td>
+                <td class="if-display">{{formatDateTime(visit.closestDate)}}</td>
                 <td>
                     <button class="add-visit" mat-icon-button
                         (click)="routeToCreateVisitComponent(visit.doctorId, visit.clinicId)">
